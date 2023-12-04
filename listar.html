@@ -1,11 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CONCESIONARIO CODO A CODO - LISTADO</title>
+    <title>LISTAR DATOS DE VEHICULOS</title>
+    <link rel="stylesheet" href="estilos_alta.css" />
+  </head>
+  <body>
+    <header class="encabezado">
+      <h1>CONCESIONARIO CODO A CODO</h1>
+    </header>
+
+    <h2>LISTADO DE VEHICULOS</h2>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Código</th>
+          <th>Marca</th>
+          <th>Modelo</th>
+          <th align="right">Año</th>
+          <th align="right">Precio</th>
+          <th>Foto</th>
+        </tr>
+      </thead>
+      <tbody id="tablaVehiculos"></tbody>
+    </table>
+    <div class="contenedor-centrado">
+      <a href="index.html">Menu principal</a>
+    </div>
+    <script src="listado.js"></script>
+  </body>
 </html>
