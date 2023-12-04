@@ -1,11 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
-</body>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initialscale=1.0" />
+    <title>CONCESIONARIO CODO A CODO - ALTAS</title>
+    <link rel="stylesheet" href="estilos_alta.css" />
+  </head>
+  <body>
+    <header class="encabezado">
+      <h1>CONCESIONARIO CODO A CODO</h1>
+    </header>
+
+    <h2>INGRESAR BAJA DE VEHICULO</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Código</th>
+          <th>Marca</th>
+          <th>Modelo</th>
+          <th align="right">Año</th>
+          <th>Precio</th>
+          <th>Foto</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="vehiculo in vehiculos">
+          <td>{{ vehiculo.codigo }}</td>
+          <td>{{ vehiculo.marca }}</td>
+          <td>{{ vehiculo.modelo }}</td>
+          <td align="right">{{ vehiculo.año }}</td>
+          <td align="right">{{ vehiculo.precio }}</td>
+          <td>
+            <button @click="eliminarVehiculo(vehiculo.codigo)">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="contenedor-centrado">
+      <a href="index.html">Menu principal</a>
+    </div>
+    <script src="https://unpkg.com/vue@next"></script>
+    <script src="bajas.js"></script>
+  </body>
 </html>

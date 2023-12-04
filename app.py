@@ -1,5 +1,5 @@
 import mysql.connector
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
 from werkzeug.utils import secure_filename
 import os, time
@@ -44,7 +44,7 @@ class Catalogo:
         if vehiculo_existe:
             return False
         
-        sql = f"INSERT INTO vehiculos (Codigo, Marca, Modelo, Año, Precio, Foto) VALUES ({codigo}, '{marca}', '{modelo}', {anio}, {precio}, '{foto}')"
+        sql = f"INSERT INTO vehiculos (codigo, marca, modelo, anio, precio, foto) VALUES ({codigo}, '{marca}', '{modelo}', {anio}, {precio}, '{foto}')"
         self.cursor.execute(sql)
         self.conn.commit()
         return True
@@ -76,7 +76,7 @@ class Catalogo:
         # return False
 
     def modificar_vehiculo(self, codigo, nueva_marca, nuevo_modelo, nuevo_anio, nuevo_precio, nueva_foto):
-        sql = f"UPDATE vehiculos SET Marca = '{nueva_marca}', Modelo = '{nuevo_modelo}', Año = {nuevo_anio}, Precio = {nuevo_precio}, Foto = '{nueva_foto}' WHERE Codigo = {codigo}"
+        sql = f"UPDATE vehiculos SET marca = '{nueva_marca}', modelo = '{nuevo_modelo}', anio = {nuevo_anio}, precio = {nuevo_precio}, foto = '{nueva_foto}' WHERE Codigo = {codigo}"
         self.cursor.execute(sql)
         self.conn.commit()
         self.cursor.rowcount > 0
@@ -110,7 +110,7 @@ class Catalogo:
             print("-" * 30)
 
     def eliminar_vehiculo(self, codigo):
-        self.cursor.execute(f"DELETE FROM vehiculos WHERE Codigo = {codigo}")
+        self.cursor.execute(f"DELETE FROM vehiculos WHERE codigo = {codigo}")
         self.conn.commit()
         return self.cursor.rowcount > 0
         
@@ -124,25 +124,25 @@ class Catalogo:
         # return False
 
     def mostrar_vehiculo(self, codigo):
-        self.cursor.execute(f"SELECT * FROM vehiculos WHERE Codigo = {codigo}")
+        self.cursor.execute(f"SELECT * FROM vehiculos WHERE codigo = {codigo}")
         vehiculo = self.cursor.fetchone()
         if vehiculo:
             print("-" * 30)
-            print(f"    Codigo: {vehiculo['Codigo']}")
-            print(f"     Marca: {vehiculo['Marca']}")
-            print(f"    Modelo: {vehiculo['Modelo']}")
-            print(f"       Año: {vehiculo['Año']}")
-            print(f"    Precio: {vehiculo['Precio']}")
-            print(f"      Foto: {vehiculo['Foto']}")
+            print(f"    Codigo: {vehiculo['codigo']}")
+            print(f"     Marca: {vehiculo['marca']}")
+            print(f"    Modelo: {vehiculo['modelo']}")
+            print(f"       Año: {vehiculo['anio']}")
+            print(f"    Precio: {vehiculo['precio']}")
+            print(f"      Foto: {vehiculo['foto']}")
             print("-" * 30)
         else:
             print("Vehículo no encontrado.")
 
 # Crear una instancia de la clase catalogo
-catalogo = Catalogo(host='localhost', user='root', password='', database='app_concesionaria')
+catalogo = Catalogo(host='mauropy.mysql.pythonanywhere-services.com', user='mauropy', password='passDataBase', database='mauropy$app_concesionaria')
 
 # Carpeta para guardar las imagenes
-ruta_destino = 'static/img/'
+ruta_destino = '/home/home/mauropy/mysite/static/img/'
 
 # Listar Vehiculos
 @app.route('/vehiculos', methods={'GET'})
@@ -152,30 +152,30 @@ def listar_vehiculos():
 
 # Ruta Mostrar Vehiculo
 @app.route("/vehiculos/<int:codigo>", methods=["GET"])
-def mostrar_producto(codigo):
-    vehiculo = catalogo.consultar_producto(codigo)
+def mostrar_vehiculo(codigo):
+    vehiculo = catalogo.consultar_vehiculo(codigo)
     if vehiculo:
         return jsonify(vehiculo)
     else:
         return "Vehículo no encontrado", 404
 
 # Ruta Agregar Vehiculo    
-@app.route("/productos", methods=["POST"])
-def agregar_producto():
+@app.route("/vehiculos", methods=["POST"])
+def agregar_vehiculo():
     # Recojo los datos del form
-    codigo = request.form['Codigo']
-    marca = request.form['Marca']
-    modelo = request.form['Modelo']
-    anio = request.form['Año']
-    precio = request.form['Precio']
-    foto = request.files['Foto']
+    codigo = request.form['codigo']
+    marca = request.form['marca']
+    modelo = request.form['modelo']
+    anio = request.form['anio']
+    precio = request.form['precio']
+    foto = request.files['foto']
     nombre_imagen = secure_filename(foto.filename)
 
     nombre_base, extension = os.path.splitext(nombre_imagen)
     nombre_imagen = f"{nombre_base}_{int(time.time())}{extension}"
     foto.save(os.path.join(ruta_destino, nombre_imagen))
 
-    if catalogo.agregar_producto(codigo, marca, modelo, anio, precio, nombre_imagen):
+    if catalogo.agregar_vehiculo(codigo, marca, modelo, anio, precio, nombre_imagen):
         return jsonify({"mensaje": "Vehículo agregado"}), 201
     else:
         return jsonify({"mensaje": "No se completo la carga, el vehículo fue registrado anteriormente"}), 400
