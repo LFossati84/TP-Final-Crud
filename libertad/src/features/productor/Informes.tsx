@@ -63,7 +63,7 @@ export function InformesProductor() {
       ) : (
         <>
           <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-            <Stat etiqueta="Costo de labores" valor={pesosCompacto(datos.total)} detalle={datos.estimados ? `${datos.estimados} labores estimadas con tarifa de referencia` : 'Todo liquidado'} icono="moneda" tono="tierra" />
+            <Stat etiqueta="Costo de labores" valor={pesosCompacto(datos.total)} detalle={datos.estimados ? `Incluye ${datos.estimados} sin liquidar, a tarifa de referencia` : 'Todo liquidado'} icono="moneda" tono="tierra" />
             <Stat etiqueta="Costo promedio" valor={pesos(datos.total / Math.max(1, datos.superficie))} detalle={`por ha de superficie (${fmtHas(datos.superficie)})`} icono="capas" tono="tierra" />
             <Stat etiqueta="Hectáreas trabajadas" valor={fmtHas(datos.hasTot)} detalle={`${datos.costos.length} labores conformadas`} icono="tractor" tono="verde" />
             <Stat etiqueta="Contratistas" valor={datos.porContratista.size} detalle="trabajaron en la campaña" icono="usuarios" tono="cielo" />

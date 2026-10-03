@@ -51,7 +51,7 @@ export function CuadernoImprimible() {
       }))
   )
 
-  if (!est || !prod) return <EmptyState titulo="No encontramos el establecimiento" />
+  if (!est || !prod) return <main id="contenido" className="mx-auto max-w-lg px-4 py-16"><EmptyState titulo="No encontramos el establecimiento" /></main>
 
   const aplicaciones = partes.filter((p) => p.establecimientoId === est.id && p.campania === campania && p.labor === 'pulverizacion' && p.estado === 'conformado' && lotes.some((l) => l.id === p.loteId))
   const validadas = aplicaciones.filter((p) => p.validacion?.estado === 'validada')
@@ -60,7 +60,7 @@ export function CuadernoImprimible() {
   const totalHas = lotes.reduce((s, l) => s + l.has, 0)
 
   return (
-    <div className="forzar-claro min-h-screen bg-paper-3 py-6 print:bg-white print:py-0">
+    <main id="contenido" className="forzar-claro min-h-screen bg-paper-3 py-6 print:bg-white print:py-0">
       <div className="mx-auto mb-4 flex max-w-[210mm] flex-wrap items-center justify-between gap-2 px-4 print:hidden">
         <Button variante="secundario" icono="flechaIzquierda" onClick={() => navigate(-1)}>Volver</Button>
         <p className="hidden text-sm text-texto-suave lg:block">Vista previa · elegí “Guardar como PDF” al imprimir</p>
@@ -176,6 +176,6 @@ export function CuadernoImprimible() {
         </footer>
       </article>
       </div>
-    </div>
+    </main>
   )
 }

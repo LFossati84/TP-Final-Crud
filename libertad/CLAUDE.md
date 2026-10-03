@@ -15,9 +15,12 @@ npm run lint       # ESLint (flat config)
 npm run typecheck  # tsc -b
 npm run build      # tsc -b && vite build → dist/ (incluye 404.html para SPA)
 npm run preview    # sirve dist/
+npm run verify     # lint + build + Playwright (F1–F8 y barrido de pantallas 390/768/1440)
 ```
 
-Antes de cada commit: `npm run lint && npm run build` sin errores.
+Antes de cada commit: `npm run lint && npm run build` sin errores. Antes de un release: `npm run verify`.
+
+Si agregás un paso a un recorrido o una pantalla nueva, sumala a `e2e/` (los recorridos leen `data-objetivo`/`data-avance` del tooltip, así que cualquier objetivo nuevo necesita su `data-tour`).
 
 ## Stack
 

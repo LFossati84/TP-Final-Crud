@@ -31,7 +31,7 @@ export function CobranzaAdmin() {
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         <Stat etiqueta="Monto gestionado" valor={pesosCompacto(r.gestionado)} detalle={`${liquidaciones.length} liquidaciones`} icono="moneda" tono="tierra" />
         <Stat etiqueta="Cobrado" valor={pesosCompacto(r.cobrado)} detalle={`${porcentaje(r.gestionado ? r.cobrado / r.gestionado : 0)} del gestionado`} icono="checkCirculo" tono="verde" />
-        <Stat etiqueta="Cobro en término" valor={porcentaje(r.cobroEnTermino)} detalle="Liquidaciones cobradas antes del vencimiento" icono="reloj" tono="cielo" />
+        <Stat etiqueta="Cobro en término" valor={porcentaje(r.cobroEnTermino)} detalle="Cobradas al vencimiento, sobre las ya exigibles" icono="reloj" tono="cielo" />
         <Stat etiqueta="En mora o disputa" valor={pesosCompacto(r.vencido + r.enDisputa)} detalle={`${pesos(r.vencido)} vencido · ${pesos(r.enDisputa)} en disputa`} icono="alerta" tono="rojo" />
       </div>
       <div className="grid gap-6 xl:grid-cols-2">

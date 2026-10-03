@@ -47,9 +47,9 @@ export function ContratistaLayout() {
   return (
     <PhoneFrame lateral={<LateralContratista />}>
       <BannerSinSenal />
-      <div className="relative flex-1 overflow-y-auto overscroll-contain" id="contenido">
+      <main className="relative flex-1 overflow-y-auto overscroll-contain" id="contenido">
         <Outlet />
-      </div>
+      </main>
       <BottomNav />
     </PhoneFrame>
   )

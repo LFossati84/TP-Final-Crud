@@ -1,5 +1,5 @@
 import { estadoCobro, saldo, total } from './cobranza'
-import { diasEntre } from './reloj'
+import { diasEntre, diasHasta } from './reloj'
 import type { Liquidacion, ParteLabor } from './types'
 
 /** Días entre el envío (o sincronización) y la conformidad de cada parte conformado. */
@@ -42,14 +42,16 @@ export interface ResumenCobranzaRed {
 }
 
 export function resumenCobranzaRed(liquidaciones: Liquidacion[]): ResumenCobranzaRed {
-  const cerradas = liquidaciones.filter((l) => l.estado === 'cobrada' && l.cobros.length)
-  const enTermino = cerradas.filter((l) => (l.cobros[l.cobros.length - 1]?.fecha ?? '') <= l.vencimiento).length
+  // Exigibles: cobradas o con el vencimiento ya cumplido. Las vencidas sin cobrar cuentan en contra.
+  const cobradaEnTermino = (l: Liquidacion) => l.estado === 'cobrada' && (l.cobros[l.cobros.length - 1]?.fecha ?? '') <= l.vencimiento
+  const exigibles = liquidaciones.filter((l) => (l.estado === 'cobrada' && l.cobros.length > 0) || diasHasta(l.vencimiento) < 0)
+  const enTermino = exigibles.filter(cobradaEnTermino).length
   return {
     gestionado: liquidaciones.reduce((s, l) => s + total(l), 0),
     cobrado: liquidaciones.reduce((s, l) => s + l.cobros.reduce((a, c) => a + c.monto, 0), 0),
     pendiente: liquidaciones.filter((l) => l.estado !== 'cobrada').reduce((s, l) => s + saldo(l), 0),
     vencido: liquidaciones.filter((l) => estadoCobro(l) === 'vencido').reduce((s, l) => s + saldo(l), 0),
     enDisputa: liquidaciones.filter((l) => estadoCobro(l) === 'en_disputa').reduce((s, l) => s + saldo(l), 0),
-    cobroEnTermino: cerradas.length ? enTermino / cerradas.length : 0,
+    cobroEnTermino: exigibles.length ? enTermino / exigibles.length : 0,
   }
 }

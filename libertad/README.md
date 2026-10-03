@@ -29,6 +29,9 @@ Otros scripts:
 | `npm run preview` | Sirve `dist/` localmente (http://localhost:4173) |
 | `npm run lint` | ESLint |
 | `npm run typecheck` | TypeScript sin emitir |
+| `npm run verify` | Lint + build + Playwright: recorre F1–F8 con clics reales y barre todas las pantallas en 390/768/1440 (claro y oscuro). Falla ante cualquier error de consola o desborde horizontal. Capturas en `capturas/` |
+
+> `npm run verify` usa Chromium de Playwright. Si tu máquina no lo tiene: `npx playwright install chromium` (una sola vez).
 
 ## Desplegar como sitio estático
 
@@ -80,8 +83,51 @@ Vite + React + TypeScript estricto + Tailwind CSS + React Router + Zustand. Sin 
 | 4 | Cobranza + reputación de pago | ✅ |
 | 5 | Ingeniero agrónomo + Administrador | ✅ |
 | 6 | Recorridos guiados F1–F8, onboarding, planes, pulido | ✅ |
-| 7 | Verificación final | ⏳ |
+| 7 | Verificación final | ✅ |
 
 ## Checklist final
 
-_Se completa en la Fase 7: pantallas por rol, flujos probados y atajos de demo._
+### Calidad
+- [x] `npm run lint` sin errores ni avisos.
+- [x] `npm run typecheck` / `npm run build` sin errores; TypeScript estricto, sin `any`.
+- [x] Dependencias de runtime: solo `react`, `react-dom`, `react-router`, `zustand`.
+- [x] Sin datos de negocio en `localStorage` (solo `libertad:rol` y `libertad:tema`).
+- [x] `npm run verify`: F1–F8 completos con clics reales en escritorio (1440) y celular (390), cero errores de consola.
+- [x] Todas las pantallas sin errores ni avisos de consola y sin desborde horizontal en 390, 768 y 1440 px, en modo claro y oscuro.
+- [x] Landmarks (`main`), enlace "Saltar al contenido", foco visible, objetivos táctiles ≥ 44 px, modales con foco atrapado y Esc, toasts con `aria-live`.
+
+### Pantallas por rol
+
+| Rol | Pantallas |
+|---|---|
+| Contratista (celular) | Inicio · Nuevo parte (5 pasos, sin señal) · Mis trabajos (filtros, pedidos) · Detalle y corrección de parte · Cobros (listos para cobrar, seguimiento, cuenta corriente) · Armar liquidación · Detalle de liquidación (WhatsApp, cobro, disputa) · Perfil (verificación, documentos, reseñas) |
+| Productor | Panel · Partes (conformar / observar / rechazar) · Cuaderno + PDF · Contratistas (directorio, mapa, perfil, presupuestos) · Pagos (aceptar / observar, calendario, marcar pagado) · Establecimientos y lotes · Informes · Configuración |
+| Ingeniero agrónomo | Mis clientes · Aplicaciones a validar · Recetas · Cuadernos con validación |
+| Administrador | Verificaciones · Contratistas · Disputas · Cobranza · Métricas |
+| Comunes | Landing · Onboarding (3 pasos) · Planes · Sistema de diseño (`/kit`) · Comprobante y cuaderno imprimibles · 404 |
+
+### Flujos probados (recorrido guiado y a mano)
+
+- [x] F1 Parte sin señal → sincronización → conformidad → cuaderno → reputación → liquidación → recordatorio → pago → cobro conciliado
+- [x] F2 Búsqueda de pulverizador verificado y presupuesto aceptado
+- [x] F3 Cuaderno exportado a PDF con sello del ingeniero
+- [x] F4 Administrador sube a Verificado (badge en vivo en toda la app)
+- [x] F5 Parte observado por hectáreas, corrección y reenvío
+- [x] F6 Ingeniero observa dosis, el contratista corrige y se valida con sello
+- [x] F7 Mora, recordatorios escalonados, disputa e intervención
+- [x] F8 ART por vencer: alerta al contratista y advertencia en búsquedas
+
+### Atajos para mostrar la demo
+
+- **Recorrido guiado** (botón dorado): el camino más corto para mostrar cada flujo; prepara el escenario solo.
+- **Reiniciar demo** (ícono ↺) o recargar la página: vuelve al escenario inicial (15/10/2026).
+- **Ver como**: cambia de productor, contratista o ingeniero dentro del mismo rol.
+- **Señal on/off** (rol contratista): simula trabajar en el lote sin cobertura.
+- Escenarios listos para mostrar sin recorrido:
+  - `/contratista/trabajos/pt33` — parte observado para corregir.
+  - `/productor/partes/pt20` — aplicación con dosis fuera de receta.
+  - `/contratista/cobros/lq4` — liquidación en mora (WhatsApp, disputa).
+  - `/admin` — Giuliani Servicios Agropecuarios con documentos esperando revisión.
+  - `/contratista/perfil` — ART de El Ombú por vencer en 6 días.
+  - `/imprimir/cuaderno/e1/2025-26` — cuaderno completo con sello.
+- Tema claro/oscuro desde la barra (se recuerda entre visitas).
