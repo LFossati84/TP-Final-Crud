@@ -1,3 +1,4 @@
+import { AVISO_IMPRESION, PUBLICADO } from '@/app/publicado'
 import { useNavigate, useParams, useSearchParams } from 'react-router'
 import { completitudCuaderno, describirInsumos } from '@/domain/cuaderno'
 import { campaniaDeSlug, etiquetaCultivo, etiquetaLabor, fecha, fechaLarga, num } from '@/domain/format'
@@ -7,6 +8,7 @@ import { useCatalogo } from '@/store/useCatalogo'
 import { useDemo } from '@/store/useDemo'
 import { Button } from '@/ui/Button'
 import { EmptyState } from '@/ui/EmptyState'
+import { toast } from '@/ui/toast-store'
 
 /** Sello circular de validación profesional (SVG). */
 function Sello({ nombre, matricula }: { nombre: string; matricula: string }) {
@@ -32,6 +34,10 @@ export function CuadernoImprimible() {
   const { establecimiento: estId, campania: slug } = useParams()
   const [params] = useSearchParams()
   const navigate = useNavigate()
+  const imprimir = () => {
+    if (PUBLICADO) toast.info(AVISO_IMPRESION.titulo, AVISO_IMPRESION.detalle)
+    else window.print()
+  }
   const cat = useCatalogo()
   const partes = useDemo((s) => s.partes)
   const cuaderno = useDemo((s) => s.cuaderno)
@@ -64,7 +70,7 @@ export function CuadernoImprimible() {
       <div className="mx-auto mb-4 flex max-w-[210mm] flex-wrap items-center justify-between gap-2 px-4 print:hidden">
         <Button variante="secundario" icono="flechaIzquierda" onClick={() => navigate(-1)}>Volver</Button>
         <p className="hidden text-sm text-texto-suave lg:block">Vista previa · elegí “Guardar como PDF” al imprimir</p>
-        <Button icono="imprimir" onClick={() => window.print()} data-tour="imprimir">Imprimir / Guardar PDF</Button>
+        <Button icono="imprimir" onClick={imprimir} data-tour="imprimir">Imprimir / Guardar PDF</Button>
       </div>
 
       <div className="overflow-x-auto px-2 print:overflow-visible print:px-0">

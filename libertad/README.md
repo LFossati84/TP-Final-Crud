@@ -11,6 +11,8 @@ Zona piloto: sur de Santa Fe (Venado Tuerto, Rufino, Firmat, Murphy, Hughes, Vil
 
 > Demo ilustrativa: no procesa pagos ni emite comprobantes fiscales. No se conecta a ningún servicio real.
 
+**Demo publicada:** https://claude.ai/artifact/Gk1nyQR3GpZhzMQNtGdL29 (privada: se comparte desde el menú Compartir de la página).
+
 ## Cómo correrla
 
 Requisitos: Node 20.19+ (probado con Node 22) y npm.
@@ -29,11 +31,22 @@ Otros scripts:
 | `npm run preview` | Sirve `dist/` localmente (http://localhost:4173) |
 | `npm run lint` | ESLint |
 | `npm run typecheck` | TypeScript sin emitir |
+| `npm run build:publicada` | Genera `dist-artifact/`: la versión para publicar en un visor sin barra de direcciones (router en memoria, rutas relativas, `index.html` como fragmento) |
 | `npm run verify` | Lint + build + Playwright: recorre F1–F8 con clics reales y barre todas las pantallas en 390/768/1440 (claro y oscuro). Falla ante cualquier error de consola o desborde horizontal. Capturas en `capturas/` |
 
 > `npm run verify` usa Chromium de Playwright. Si tu máquina no lo tiene: `npx playwright install chromium` (una sola vez).
 
 ## Desplegar como sitio estático
+
+### Versión publicada (link de claude.ai)
+
+`npm run build:publicada` arma `dist-artifact/` y la lista de archivos en `dist-artifact/archivos.json`. Diferencias con el build normal:
+
+- Navega con un router en memoria: la barra de direcciones no cambia. Se puede abrir un escenario con un ancla: `#parte-observado`, `#dosis-fuera-de-receta`, `#mora`, `#cuaderno-pdf`, `#contratista`, `#productor`, `#ingeniero`, `#admin`, `#planes`.
+- El visor no deja abrir el diálogo de impresión: el botón "Imprimir / Guardar PDF" muestra un aviso. Para guardar el PDF, usá la demo local.
+- Para probarla igual que en el visor: servir `dist-artifact/` y correr `DEMO_URL=http://localhost:<puerto> npx playwright test e2e/recorridos.spec.ts`.
+
+### Hosting propio
 
 `npm run build` genera `dist/` listo para cualquier hosting estático. El build incluye `404.html` (copia de `index.html`) y `_redirects` para que las rutas internas funcionen al recargar.
 

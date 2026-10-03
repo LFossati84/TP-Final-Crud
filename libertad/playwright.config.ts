@@ -14,7 +14,8 @@ export default defineConfig({
   expect: { timeout: 8_000 },
   reporter: [['list']],
   use: {
-    baseURL: 'http://localhost:4173',
+    // DEMO_URL permite probar otra copia servida (ej. la versión publicada).
+    baseURL: process.env.DEMO_URL ?? 'http://localhost:4173',
     trace: 'retain-on-failure',
     screenshot: 'only-on-failure',
   },
@@ -23,7 +24,7 @@ export default defineConfig({
     // El barrido de pantallas define sus propios anchos: corre una sola vez.
     { name: 'celular', testIgnore: /pantallas/, use: { viewport: { width: 390, height: 844 } } },
   ],
-  webServer: {
+  webServer: process.env.DEMO_URL ? undefined : {
     command: 'npx vite preview --port 4173 --strictPort',
     url: 'http://localhost:4173',
     reuseExistingServer: !process.env.CI,

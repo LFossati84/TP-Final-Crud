@@ -147,9 +147,18 @@ function PasoActivo({ def, paso }: { def: DefinicionFlujo; paso: number }) {
   let tipStyle: CSSProperties = { left: (vw - anchoTip) / 2, top: vh / 2 - 110, width: anchoTip }
   if (rect && !sinObjetivo) {
     const abajo = rect.top + rect.height + 12
-    const arriba = rect.top - 12
+    const espacioAbajo = vh - abajo - 12
+    const espacioArriba = rect.top - 24
     const left = Math.max(12, Math.min(vw - anchoTip - 12, rect.left + rect.width / 2 - anchoTip / 2))
-    tipStyle = abajo + 200 < vh ? { left, top: abajo, width: anchoTip } : { left, top: Math.max(12, arriba - 200), width: anchoTip }
+    // Arriba se ancla por el borde inferior: el cartel nunca tapa el objetivo, mida lo que mida.
+    // Si el objetivo es más grande que la pantalla, el cartel se fija abajo, dentro de la ventana.
+    if (espacioAbajo >= 240 || (espacioAbajo >= 160 && espacioAbajo >= espacioArriba)) {
+      tipStyle = { left, top: Math.max(12, abajo), width: anchoTip, maxHeight: espacioAbajo, overflowY: 'auto' }
+    } else if (espacioArriba >= 160) {
+      tipStyle = { left, bottom: Math.max(12, vh - rect.top + 12), width: anchoTip, maxHeight: espacioArriba, overflowY: 'auto' }
+    } else {
+      tipStyle = { left: vw - anchoTip - 12, bottom: 12, width: anchoTip }
+    }
   }
 
   return (

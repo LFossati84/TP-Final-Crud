@@ -1,4 +1,5 @@
 import { isRouteErrorResponse, Link, useRouteError } from 'react-router'
+import { PUBLICADO } from '@/app/publicado'
 import { useDemo } from '@/store/useDemo'
 import { ErrorState } from '@/ui/EmptyState'
 
@@ -16,7 +17,7 @@ export function ErrorRuta() {
       />
       <div className="flex justify-center gap-3 text-sm font-semibold">
         <Link to="/" className="text-verde-800 hover:underline">Volver al inicio</Link>
-        <button type="button" onClick={() => { reiniciar(); window.location.assign(import.meta.env.BASE_URL) }} className="text-verde-800 hover:underline">Reiniciar demo</button>
+        <button type="button" onClick={() => { reiniciar(); if (PUBLICADO) window.location.reload(); else window.location.assign(import.meta.env.BASE_URL) }} className="text-verde-800 hover:underline">Reiniciar demo</button>
       </div>
     </main>
   )

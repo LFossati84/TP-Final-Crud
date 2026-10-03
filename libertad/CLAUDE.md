@@ -16,6 +16,7 @@ npm run typecheck  # tsc -b
 npm run build      # tsc -b && vite build → dist/ (incluye 404.html para SPA)
 npm run preview    # sirve dist/
 npm run verify     # lint + build + Playwright (F1–F8 y barrido de pantallas 390/768/1440)
+npm run build:publicada  # dist-artifact/: versión para el visor (router en memoria, sin window.print)
 ```
 
 Antes de cada commit: `npm run lint && npm run build` sin errores. Antes de un release: `npm run verify`.
@@ -26,7 +27,7 @@ Si agregás un paso a un recorrido o una pantalla nueva, sumala a `e2e/` (los re
 
 - Vite 8 + React 19 + TypeScript estricto (`strict`, `noUncheckedIndexedAccess`). Prohibido `any`; si hace falta, `unknown` + narrowing.
 - Tailwind CSS 3.4 (`tailwind.config.ts` define los tokens). Sin CSS-in-JS.
-- React Router 7 (modo librería, `createBrowserRouter`, `basename = import.meta.env.BASE_URL`).
+- React Router 7 (modo librería, `createBrowserRouter`, `basename = import.meta.env.BASE_URL`). Con `VITE_DESTINO=artifact` usa `createMemoryRouter` (ver `src/app/publicado.ts`): no uses `window.location` ni `window.print()` directo.
 - Zustand para el store en memoria. Dependencias de runtime permitidas: `react`, `react-dom`, `react-router`, `zustand`. **No agregar otras** sin justificarlo.
 - Gráficos, mapas, íconos, firma y "PDF" son **SVG/HTML propios**.
 - Alias `@/` → `src/`.

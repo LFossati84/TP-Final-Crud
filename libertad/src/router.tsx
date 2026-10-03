@@ -1,9 +1,10 @@
 import type { ComponentType } from 'react'
-import { createBrowserRouter } from 'react-router'
+import { createBrowserRouter, createMemoryRouter, type RouteObject } from 'react-router'
 import { CargaInicial } from '@/app/CargaInicial'
 import { ErrorRuta } from '@/app/ErrorRuta'
 import { AdminLayout, ContratistaLayout, IngenieroLayout, ProductorLayout } from '@/app/Layouts'
 import { NoEncontrada } from '@/app/NoEncontrada'
+import { PUBLICADO, rutaInicial } from '@/app/publicado'
 import { RootLayout } from '@/app/RootLayout'
 import type { HandleRuta } from '@/app/DeskLayout'
 
@@ -14,8 +15,7 @@ function pagina<M, K extends keyof M>(cargar: () => Promise<M>, nombre: K) {
   return async () => ({ Component: (await cargar())[nombre] as ComponentType })
 }
 
-export const router = createBrowserRouter(
-  [
+const rutas: RouteObject[] = [
     {
       element: <RootLayout />,
       errorElement: <ErrorRuta />,
@@ -83,6 +83,8 @@ export const router = createBrowserRouter(
         { path: '*', element: <NoEncontrada /> },
       ],
     },
-  ],
-  { basename: import.meta.env.BASE_URL.replace(/\/$/, '') || '/' },
-)
+]
+
+export const router = PUBLICADO
+  ? createMemoryRouter(rutas, { initialEntries: [rutaInicial()] })
+  : createBrowserRouter(rutas, { basename: import.meta.env.BASE_URL.replace(/\/$/, '') || '/' })

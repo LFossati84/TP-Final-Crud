@@ -8,7 +8,7 @@
     text-rendering: optimizeLegibility;
   }
   body {
-    @apply bg-paper font-sans text-texto antialiased;
+    @apply bg-paper font-sans text-base text-texto antialiased;
   }
   h1, h2, h3 {
     @apply font-serif tracking-tight;
