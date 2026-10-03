@@ -16,7 +16,7 @@ export function Stat({ etiqueta, valor, detalle, icono, tono = 'tierra', classNa
           </span>
         ) : null}
       </div>
-      <p className="num mt-2 font-serif text-2xl font-semibold leading-tight text-tierra-900">{valor}</p>
+      <p className="mt-2 text-2xl font-semibold leading-tight text-tierra-900">{valor}</p>
       {detalle ? <div className="mt-1 text-sm text-texto-suave">{detalle}</div> : null}
     </div>
   )

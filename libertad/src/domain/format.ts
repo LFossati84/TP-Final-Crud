@@ -106,6 +106,15 @@ export function plural(n: number, singular: string, pluralForma = `${singular}s`
   return `${num(n, 1)} ${n === 1 ? singular : pluralForma}`
 }
 
+/** '2025/26' ⇄ '2025-26' (para usar la campaña en una URL). */
+export function slugCampania(c: string): string {
+  return c.replace('/', '-')
+}
+
+export function campaniaDeSlug(s: string | undefined): '2025/26' | '2026/27' {
+  return s === '2025-26' ? '2025/26' : '2026/27'
+}
+
 // ───────────────────────── Etiquetas del dominio ─────────────────────────
 
 export const etiquetaRol: Record<Rol, string> = {

@@ -44,7 +44,8 @@ Otros scripts:
 - `/kit` — Sistema de diseño con datos reales del escenario (colores, componentes, mapas, badges calculados en vivo).
 - `/contratista` — App del contratista (celular): Inicio con trabajos del día, cobros y alertas; **Nuevo parte** en 5 pasos con GPS simulado, receta, controles de dosis/viento, fotos y firma; **Mis trabajos** con filtros, detalle, corrección y respuesta a pedidos de presupuesto; **Perfil** con verificación, documentación y reseñas.
 - **Modo sin señal**: botón "Con señal / Sin señal" en la barra (rol contratista). Los partes quedan en cola y al volver la señal se sincronizan con animación y aviso al productor.
-- `/productor`, `/ingeniero`, `/admin` — Layouts de escritorio con sidebar; las pantallas se completan en las fases 3 a 5.
+- `/productor` — Panel (KPIs, mapa con estado de lotes, alertas, calendario), **Partes** (conformar con reseña / observar / rechazar, controles automáticos), **Cuaderno** (filtros, completitud, validación) con **Exportar informe PDF** (`/imprimir/cuaderno/...`), **Contratistas** (filtros, lista, mapa, perfil, presupuesto, contratación, mis pedidos), **Establecimientos y lotes**, **Informes** y **Configuración** (validación profesional y consentimiento de reputación de pago).
+- `/ingeniero`, `/admin` — Layouts de escritorio con sidebar; las pantallas se completan en las fases 4 y 5.
 - Barra superior: selector de rol, "Ver como" (otra persona del mismo rol), señal on/off (contratista), recorrido guiado, tema y reinicio de la demo.
 
 ## Stack
@@ -58,7 +59,7 @@ Vite + React + TypeScript estricto + Tailwind CSS + React Router + Zustand. Sin 
 | 0 | Plan, estructura, CLAUDE.md, README | ✅ |
 | 1 | Design system, layout, selector de rol, datos mock | ✅ |
 | 2 | Contratista + modo offline | ✅ |
-| 3 | Productor (panel, partes, cuaderno + PDF, contratistas, lotes) | ⏳ |
+| 3 | Productor (panel, partes, cuaderno + PDF, contratistas, lotes) | ✅ |
 | 4 | Cobranza + reputación de pago | ⏳ |
 | 5 | Ingeniero agrónomo + Administrador | ⏳ |
 | 6 | Recorridos guiados F1–F8, onboarding, planes, pulido | ⏳ |

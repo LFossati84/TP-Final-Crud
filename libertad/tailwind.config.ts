@@ -175,6 +175,8 @@ export default {
       addBase({
         ':root': { ...variablesClaras(), colorScheme: 'light' },
         '.dark': { ...variablesOscuras(), colorScheme: 'dark' },
+        // Documentos imprimibles: siempre en claro, aunque la app esté en modo oscuro.
+        '.forzar-claro': { ...variablesClaras(), colorScheme: 'light' },
       })
     }),
   ],

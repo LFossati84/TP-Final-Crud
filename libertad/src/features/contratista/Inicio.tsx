@@ -78,15 +78,15 @@ export function InicioContratista() {
           <dl className="mt-3 grid grid-cols-3 gap-2 text-center">
             <div className="rounded-xl bg-cielo-50 px-1 py-2">
               <dt className="text-[11px] font-semibold text-cielo-800">A cobrar</dt>
-              <dd className="num font-serif text-lg font-semibold text-tierra-900">{pesosCompacto(datos.cobros.aCobrar)}</dd>
+              <dd className="text-lg font-semibold text-tierra-900">{pesosCompacto(datos.cobros.aCobrar)}</dd>
             </div>
             <div className="rounded-xl bg-rojo-50 px-1 py-2">
               <dt className="text-[11px] font-semibold text-rojo-800">Vencido</dt>
-              <dd className="num font-serif text-lg font-semibold text-rojo-800">{pesosCompacto(datos.cobros.vencido)}</dd>
+              <dd className="text-lg font-semibold text-rojo-800">{pesosCompacto(datos.cobros.vencido)}</dd>
             </div>
             <div className="rounded-xl bg-verde-50 px-1 py-2">
               <dt className="text-[11px] font-semibold text-verde-800">Cobrado oct.</dt>
-              <dd className="num font-serif text-lg font-semibold text-tierra-900">{pesosCompacto(datos.cobros.cobradoMes)}</dd>
+              <dd className="text-lg font-semibold text-tierra-900">{pesosCompacto(datos.cobros.cobradoMes)}</dd>
             </div>
           </dl>
           {datos.cobros.listos > 0 || datos.cobros.pagosInformados > 0 ? (

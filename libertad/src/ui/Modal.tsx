@@ -18,6 +18,9 @@ type Props = {
 
 const ANCHOS = { sm: 'max-w-md', md: 'max-w-lg', lg: 'max-w-2xl', xl: 'max-w-4xl' }
 
+/** Pila de modales abiertos: solo el de arriba responde a Esc y Tab. */
+const pila: symbol[] = []
+
 const ENFOCABLES = 'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])'
 
 /** Diálogo accesible: foco atrapado, Esc para cerrar, devuelve el foco al disparador. */
@@ -33,14 +36,16 @@ export function Modal({ abierto, onCerrar, titulo, descripcion, children, pie, t
 
   useEffect(() => {
     if (!abierto) return
+    const yo = Symbol('modal')
+    pila.push(yo)
     const previo = document.activeElement as HTMLElement | null
     const nodo = ref.current
     const primero = nodo?.querySelector<HTMLElement>('[data-autofocus]') ?? nodo?.querySelector<HTMLElement>(ENFOCABLES)
     primero?.focus()
-    const overflow = document.body.style.overflow
     if (!enMarco) document.body.style.overflow = 'hidden'
 
     const onKey = (e: KeyboardEvent) => {
+      if (pila[pila.length - 1] !== yo) return
       if (e.key === 'Escape') {
         e.stopPropagation()
         cerrarRef.current()
@@ -62,7 +67,8 @@ export function Modal({ abierto, onCerrar, titulo, descripcion, children, pie, t
     document.addEventListener('keydown', onKey)
     return () => {
       document.removeEventListener('keydown', onKey)
-      document.body.style.overflow = overflow
+      pila.splice(pila.indexOf(yo), 1)
+      if (pila.length === 0) document.body.style.overflow = ''
       previo?.focus?.()
     }
   }, [abierto, enMarco])

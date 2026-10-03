@@ -11,6 +11,15 @@ import { MisTrabajos } from '@/features/contratista/MisTrabajos'
 import { NuevoParteRuta } from '@/features/contratista/nuevo-parte/NuevoParte'
 import { PerfilContratista } from '@/features/contratista/Perfil'
 import { Kit } from '@/features/kit/Kit'
+import { ConfiguracionProductor } from '@/features/productor/Configuracion'
+import { DirectorioContratistas } from '@/features/productor/contratistas/Directorio'
+import { PerfilRed } from '@/features/productor/contratistas/PerfilRed'
+import { CuadernoProductor } from '@/features/productor/Cuaderno'
+import { InformesProductor } from '@/features/productor/Informes'
+import { LotesProductor } from '@/features/productor/Lotes'
+import { PanelProductor } from '@/features/productor/Panel'
+import { PartesProductor } from '@/features/productor/Partes'
+import { CuadernoImprimible } from '@/print/CuadernoImprimible'
 
 const h = (titulo: string): HandleRuta => ({ titulo })
 
@@ -37,14 +46,16 @@ export const router = createBrowserRouter(
           path: 'productor',
           element: <ProductorLayout />,
           children: [
-            { index: true, handle: h('Panel'), element: <EnConstruccion titulo="Panel" fase={3} icono="inicio" descripcion="La campaña activa de un vistazo." items={['Mapa de lotes con estado de labores', 'Partes por conformar y calendario', 'Saldo a pagar, vencimientos y alertas (aplicación sin receta)']} /> },
-            { path: 'partes/*', handle: h('Partes de labor'), element: <EnConstruccion titulo="Partes de labor" fase={3} icono="documento" descripcion="Bandeja de conformidad." items={['Conformar, observar o rechazar con motivo', 'Detalle con fotos, firma, ubicación y datos de aplicación']} /> },
-            { path: 'cuaderno', handle: h('Cuaderno'), element: <EnConstruccion titulo="Cuaderno" fase={3} icono="libro" descripcion="El libro del establecimiento, alimentado por los partes." items={['Vista por lote y campaña con timeline', 'Filtros, buscador e indicador de completitud', 'Exportar informe PDF con firmas y sello profesional']} /> },
-            { path: 'contratistas/*', handle: h('Contratistas'), element: <EnConstruccion titulo="Contratistas" fase={3} icono="usuarios" descripcion="La red de contratistas verificados." items={['Filtros por servicio, zona, verificación, disponibilidad y calificación', 'Vista lista + mapa y perfil con reseñas', 'Solicitar presupuesto y contratar para una labor']} /> },
+            { index: true, handle: h('Panel'), element: <PanelProductor /> },
+            { path: 'partes', handle: h('Partes de labor'), element: <PartesProductor /> },
+            { path: 'partes/:id', handle: h('Partes de labor'), element: <PartesProductor /> },
+            { path: 'cuaderno', handle: h('Cuaderno'), element: <CuadernoProductor /> },
+            { path: 'contratistas', handle: h('Contratistas'), element: <DirectorioContratistas /> },
+            { path: 'contratistas/:id', handle: h('Contratistas'), element: <PerfilRed /> },
             { path: 'pagos/*', handle: h('Pagos'), element: <EnConstruccion titulo="Pagos" fase={4} icono="billetera" descripcion="Liquidaciones recibidas y vencimientos." items={['Aceptar u observar liquidaciones', 'Calendario de vencimientos', 'Marcar como pagado con comprobante e historial']} /> },
-            { path: 'lotes', handle: h('Establecimientos y lotes'), element: <EnConstruccion titulo="Establecimientos y lotes" fase={3} icono="mapa" descripcion="Tus campos y lotes." items={['Alta y edición de establecimientos', 'Lotes con superficie, cultivo y mapa']} /> },
-            { path: 'informes', handle: h('Informes'), element: <EnConstruccion titulo="Informes" fase={3} icono="grafico" descripcion="Números de la campaña." items={['Hectáreas por contratista', 'Costos por labor y por lote']} /> },
-            { path: 'configuracion', handle: h('Configuración'), element: <EnConstruccion titulo="Configuración" fase={3} icono="engranaje" descripcion="Preferencias de la cuenta." items={['Activar validación profesional (ingeniero agrónomo)', 'Consentimiento para compartir la reputación de pago']} /> },
+            { path: 'lotes', handle: h('Establecimientos y lotes'), element: <LotesProductor /> },
+            { path: 'informes', handle: h('Informes'), element: <InformesProductor /> },
+            { path: 'configuracion', handle: h('Configuración'), element: <ConfiguracionProductor /> },
           ],
         },
         {
@@ -68,6 +79,8 @@ export const router = createBrowserRouter(
             { path: 'metricas', handle: h('Métricas'), element: <EnConstruccion titulo="Métricas" fase={5} icono="tendencia" descripcion="Salud de la red." items={['Contratistas activos, partes por mes, tasa y tiempo de conformidad']} /> },
           ],
         },
+        { path: 'imprimir/cuaderno/:establecimiento/:campania', element: <CuadernoImprimible /> },
+        { path: 'planes', element: <main id="contenido" className="mx-auto max-w-4xl px-4 py-10"><EnConstruccion titulo="Planes" fase={6} icono="estrella" descripcion="Planes ilustrativos para productores y contratistas." items={['Productor Gratis y Pro', 'Contratista Básico, Verificado y Destacado', 'Precios a definir']} /></main> },
         { path: '*', element: <NoEncontrada /> },
       ],
     },

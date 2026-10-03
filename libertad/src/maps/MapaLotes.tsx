@@ -44,7 +44,7 @@ type Props = {
 
 export function MapaLotes({ establecimiento, lotes, campania, estadoLote, seleccionado, onSeleccionar, ubicacion, leyenda, className, compacto = false }: Props) {
   const idPatron = useSvgId('mapa')
-  const propios = lotes.filter((l) => l.establecimientoId === establecimiento.id)
+  const propios = lotes.filter((l) => l.establecimientoId === establecimiento.id && l.poligono.length >= 3)
 
   const teclado = (e: KeyboardEvent, l: Lote) => {
     if (e.key === 'Enter' || e.key === ' ') {
