@@ -45,7 +45,8 @@ Otros scripts:
 - `/contratista` — App del contratista (celular): Inicio con trabajos del día, cobros y alertas; **Nuevo parte** en 5 pasos con GPS simulado, receta, controles de dosis/viento, fotos y firma; **Mis trabajos** con filtros, detalle, corrección y respuesta a pedidos de presupuesto; **Perfil** con verificación, documentación y reseñas.
 - **Modo sin señal**: botón "Con señal / Sin señal" en la barra (rol contratista). Los partes quedan en cola y al volver la señal se sincronizan con animación y aviso al productor.
 - `/productor` — Panel (KPIs, mapa con estado de lotes, alertas, calendario), **Partes** (conformar con reseña / observar / rechazar, controles automáticos), **Cuaderno** (filtros, completitud, validación) con **Exportar informe PDF** (`/imprimir/cuaderno/...`), **Contratistas** (filtros, lista, mapa, perfil, presupuesto, contratación, mis pedidos), **Establecimientos y lotes**, **Informes** y **Configuración** (validación profesional y consentimiento de reputación de pago).
-- `/ingeniero`, `/admin` — Layouts de escritorio con sidebar; las pantallas se completan en las fases 4 y 5.
+- **Cobranza** — Contratista (`/contratista/cobros`): listos para cobrar agrupados por productor, armado de liquidación (tarifas, IVA editable, condición y vencimiento), comprobante imprimible (`/imprimir/liquidacion/:id`), seguimiento con antigüedad de deuda, cuenta corriente, recordatorios por WhatsApp (maqueta) y automáticos, registro de cobro total o parcial, disputa. Productor (`/productor/pagos`): aceptar u observar, calendario de vencimientos, marcar como pagado con comprobante, historial. Reputación de pago con consentimiento.
+- `/ingeniero`, `/admin` — Layouts de escritorio con sidebar; las pantallas se completan en la Fase 5.
 - Barra superior: selector de rol, "Ver como" (otra persona del mismo rol), señal on/off (contratista), recorrido guiado, tema y reinicio de la demo.
 
 ## Stack
@@ -60,7 +61,7 @@ Vite + React + TypeScript estricto + Tailwind CSS + React Router + Zustand. Sin 
 | 1 | Design system, layout, selector de rol, datos mock | ✅ |
 | 2 | Contratista + modo offline | ✅ |
 | 3 | Productor (panel, partes, cuaderno + PDF, contratistas, lotes) | ✅ |
-| 4 | Cobranza + reputación de pago | ⏳ |
+| 4 | Cobranza + reputación de pago | ✅ |
 | 5 | Ingeniero agrónomo + Administrador | ⏳ |
 | 6 | Recorridos guiados F1–F8, onboarding, planes, pulido | ⏳ |
 | 7 | Verificación final | ⏳ |

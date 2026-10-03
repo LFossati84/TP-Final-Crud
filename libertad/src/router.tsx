@@ -5,6 +5,9 @@ import { NoEncontrada } from '@/app/NoEncontrada'
 import { RootLayout } from '@/app/RootLayout'
 import type { HandleRuta } from '@/app/DeskLayout'
 import { Landing } from '@/features/inicio/Landing'
+import { ArmarLiquidacion } from '@/features/contratista/cobros/ArmarLiquidacion'
+import { CobrosContratista } from '@/features/contratista/cobros/Cobros'
+import { DetalleLiquidacion } from '@/features/contratista/cobros/DetalleLiquidacion'
 import { DetalleParte } from '@/features/contratista/DetalleParte'
 import { InicioContratista } from '@/features/contratista/Inicio'
 import { MisTrabajos } from '@/features/contratista/MisTrabajos'
@@ -18,8 +21,10 @@ import { CuadernoProductor } from '@/features/productor/Cuaderno'
 import { InformesProductor } from '@/features/productor/Informes'
 import { LotesProductor } from '@/features/productor/Lotes'
 import { PanelProductor } from '@/features/productor/Panel'
+import { PagosProductor } from '@/features/productor/Pagos'
 import { PartesProductor } from '@/features/productor/Partes'
 import { CuadernoImprimible } from '@/print/CuadernoImprimible'
+import { LiquidacionImprimible } from '@/print/LiquidacionImprimible'
 
 const h = (titulo: string): HandleRuta => ({ titulo })
 
@@ -38,7 +43,9 @@ export const router = createBrowserRouter(
             { path: 'nuevo-parte', element: <NuevoParteRuta /> },
             { path: 'trabajos', element: <MisTrabajos /> },
             { path: 'trabajos/:id', element: <DetalleParte /> },
-            { path: 'cobros/*', element: <EnConstruccion movil titulo="Cobros" fase={4} icono="billetera" descripcion="De parte conformado a cobro conciliado." items={['Partes listos para cobrar', 'Armar liquidación y comprobante', 'Seguimiento, recordatorios por WhatsApp y registro de cobros']} /> },
+            { path: 'cobros', element: <CobrosContratista /> },
+            { path: 'cobros/nueva', element: <ArmarLiquidacion /> },
+            { path: 'cobros/:id', element: <DetalleLiquidacion /> },
             { path: 'perfil', element: <PerfilContratista /> },
           ],
         },
@@ -52,7 +59,8 @@ export const router = createBrowserRouter(
             { path: 'cuaderno', handle: h('Cuaderno'), element: <CuadernoProductor /> },
             { path: 'contratistas', handle: h('Contratistas'), element: <DirectorioContratistas /> },
             { path: 'contratistas/:id', handle: h('Contratistas'), element: <PerfilRed /> },
-            { path: 'pagos/*', handle: h('Pagos'), element: <EnConstruccion titulo="Pagos" fase={4} icono="billetera" descripcion="Liquidaciones recibidas y vencimientos." items={['Aceptar u observar liquidaciones', 'Calendario de vencimientos', 'Marcar como pagado con comprobante e historial']} /> },
+            { path: 'pagos', handle: h('Pagos'), element: <PagosProductor /> },
+            { path: 'pagos/:id', handle: h('Pagos'), element: <PagosProductor /> },
             { path: 'lotes', handle: h('Establecimientos y lotes'), element: <LotesProductor /> },
             { path: 'informes', handle: h('Informes'), element: <InformesProductor /> },
             { path: 'configuracion', handle: h('Configuración'), element: <ConfiguracionProductor /> },
@@ -80,6 +88,7 @@ export const router = createBrowserRouter(
           ],
         },
         { path: 'imprimir/cuaderno/:establecimiento/:campania', element: <CuadernoImprimible /> },
+        { path: 'imprimir/liquidacion/:id', element: <LiquidacionImprimible /> },
         { path: 'planes', element: <main id="contenido" className="mx-auto max-w-4xl px-4 py-10"><EnConstruccion titulo="Planes" fase={6} icono="estrella" descripcion="Planes ilustrativos para productores y contratistas." items={['Productor Gratis y Pro', 'Contratista Básico, Verificado y Destacado', 'Precios a definir']} /></main> },
         { path: '*', element: <NoEncontrada /> },
       ],
