@@ -38,6 +38,13 @@ Otros scripts:
 - **GitHub Pages** (en un subdirectorio): `VITE_BASE=/<nombre-del-repo>/ npm run build` y publicar `dist/`.
 - **Cualquier servidor** (nginx, S3, etc.): servir `dist/` con fallback a `index.html`.
 
+## Recorrido rápido de lo que hay
+
+- `/` — Landing de la demo: idea fuerza, elección de rol y flujos F1–F8.
+- `/kit` — Sistema de diseño con datos reales del escenario (colores, componentes, mapas, badges calculados en vivo).
+- `/contratista`, `/productor`, `/ingeniero`, `/admin` — Layouts por rol (celular para el contratista, escritorio con sidebar para el resto). Las pantallas se completan en las fases 2 a 5.
+- Barra superior: selector de rol, "Ver como" (otra persona del mismo rol), señal on/off (contratista), recorrido guiado, tema y reinicio de la demo.
+
 ## Stack
 
 Vite + React + TypeScript estricto + Tailwind CSS + React Router + Zustand. Sin otras dependencias de runtime: gráficos, mapas, íconos, firma y vista PDF son SVG/HTML propios. Detalle de convenciones, tokens y vocabulario en [`CLAUDE.md`](./CLAUDE.md).
@@ -47,7 +54,7 @@ Vite + React + TypeScript estricto + Tailwind CSS + React Router + Zustand. Sin 
 | Fase | Contenido | Estado |
 |---|---|---|
 | 0 | Plan, estructura, CLAUDE.md, README | ✅ |
-| 1 | Design system, layout, selector de rol, datos mock | ⏳ |
+| 1 | Design system, layout, selector de rol, datos mock | ✅ |
 | 2 | Contratista + modo offline | ⏳ |
 | 3 | Productor (panel, partes, cuaderno + PDF, contratistas, lotes) | ⏳ |
 | 4 | Cobranza + reputación de pago | ⏳ |

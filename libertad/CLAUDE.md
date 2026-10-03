@@ -82,11 +82,14 @@ Los colores son variables CSS en canales RGB, emitidas por un plugin del config.
 | `borde`, `borde-fuerte` | divisores e inputs |
 | `texto`, `texto-suave` | texto principal y secundario (ambos AA sobre `paper` y `superficie`) |
 | `accion`, `accion-hover`, `sobre-accion` | relleno sólido del botón primario y su texto |
+| `acento`, `acento-hover`, `sobre-acento` | relleno dorado (Recorrido guiado, destacados) |
+| `peligro`, `peligro-hover`, `sobre-peligro` | relleno de acciones destructivas (Rechazar) |
 | `foco` | anillo de foco |
+| `barra`, `barra-2`, `sobre-barra` | barra de demo (oscura en ambos modos) |
 
 - En **modo oscuro** (`.dark` en `<html>`) las escalas se espejan (50↔950…) y los semánticos se redefinen. Por eso:
   - Tintes: `bg-verde-100 text-verde-800` ✔︎ (funciona en ambos modos).
-  - Rellenos sólidos con texto: `bg-accion text-sobre-accion` ✔︎ — **nunca** `bg-verde-700 text-white` ✘.
+  - Rellenos sólidos con texto: `bg-accion text-sobre-accion`, `bg-acento text-sobre-acento`, `bg-peligro text-sobre-peligro` ✔︎ — **nunca** `bg-verde-700 text-white` ✘.
 - Sombras: `shadow-tarjeta`, `shadow-elevada`, `shadow-telefono`.
 - Tipografía: `font-serif` (títulos, cálida, sin fuentes externas) y `font-sans` (UI). Importes y hectáreas con `.num` (tabular).
 - Animaciones: `animate-entrar-arriba`, `animate-entrar-derecha`, `animate-aparecer`, `animate-pulso` (respetan `prefers-reduced-motion`).

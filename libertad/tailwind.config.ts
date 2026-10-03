@@ -51,6 +51,15 @@ const semanticos = {
     'accion-hover': '#244720',
     'sobre-accion': '#FFFFFF',
     foco: '#356F2D',
+    acento: '#EDC25A',
+    'acento-hover': '#F4D993',
+    'sobre-acento': '#2B1F16',
+    peligro: '#862F22',
+    'peligro-hover': '#6B2820',
+    'sobre-peligro': '#FFFFFF',
+    barra: '#2A1D14',
+    'barra-2': '#3D2B1F',
+    'sobre-barra': '#F3EBDD',
   },
   oscuro: {
     paper: '#17120E',
@@ -65,6 +74,15 @@ const semanticos = {
     'accion-hover': '#9DCB90',
     'sobre-accion': '#0E200D',
     foco: '#9DCB90',
+    acento: '#E3A934',
+    'acento-hover': '#EDC25A',
+    'sobre-acento': '#1F1510',
+    peligro: '#E89282',
+    'peligro-hover': '#F3BDB3',
+    'sobre-peligro': '#30100C',
+    barra: '#0F0B08',
+    'barra-2': '#241B14',
+    'sobre-barra': '#F3EBDD',
   },
 } as const
 
@@ -114,6 +132,11 @@ for (const nombre of Object.keys(semanticos.claro)) colores[nombre] = colorVar(n
 export default {
   content: ['./index.html', './src/**/*.{ts,tsx}'],
   darkMode: 'class',
+  // Solo para las muestras de color de /kit (clases armadas dinámicamente).
+  safelist: [
+    { pattern: /^bg-(tierra|verde|trigo|rojo|cielo)-(50|100|200|300|400|500|600|700|800|900|950)$/ },
+    { pattern: /^bg-(paper|paper-2|paper-3|superficie|borde|borde-fuerte|texto|texto-suave|accion|acento|peligro|barra)$/ },
+  ],
   theme: {
     colors: colores,
     extend: {

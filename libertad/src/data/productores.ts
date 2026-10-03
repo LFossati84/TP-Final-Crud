@@ -1,0 +1,72 @@
+import type { Productor } from '@/domain/types'
+
+/**
+ * p1 Los Talas: productor activo de la demo (2 establecimientos, plan Pro, validación profesional activa).
+ * p2 Bonetto: tercer establecimiento. p3–p5: clientes de contratistas (cobranza, mora).
+ */
+export const PRODUCTORES: Productor[] = [
+  {
+    id: 'p1',
+    razonSocial: 'Agropecuaria Los Talas S.A.',
+    contacto: 'Mariela Costantini',
+    cuit: '30-70815533-7',
+    localidad: 'Murphy',
+    telefono: '+54 9 3462 40-8812',
+    plan: 'pro',
+    ingenieroId: 'i1',
+    validacionProfesional: true,
+    consentimientoReputacionPago: true,
+    historicoPagos: { liquidaciones: 18, diasPromedioDesdeVencimiento: -1.5, enTermino: 0.94 },
+  },
+  {
+    id: 'p2',
+    razonSocial: 'Bonetto e Hijos S.H.',
+    contacto: 'Raúl Bonetto',
+    cuit: '30-69874120-5',
+    localidad: 'Firmat',
+    telefono: '+54 9 3465 44-1290',
+    plan: 'gratis',
+    ingenieroId: 'i2',
+    validacionProfesional: true,
+    consentimientoReputacionPago: true,
+    historicoPagos: { liquidaciones: 11, diasPromedioDesdeVencimiento: 0.5, enTermino: 0.91 },
+  },
+  {
+    id: 'p3',
+    razonSocial: 'Estancia El Mirasol S.R.L.',
+    contacto: 'Horacio Rinaldi',
+    cuit: '30-71140962-0',
+    localidad: 'Rufino',
+    telefono: '+54 9 3382 40-6635',
+    plan: 'gratis',
+    validacionProfesional: false,
+    consentimientoReputacionPago: true,
+    historicoPagos: { liquidaciones: 9, diasPromedioDesdeVencimiento: 18, enTermino: 0.56 },
+  },
+  {
+    id: 'p4',
+    razonSocial: 'Gabriel Montenegro',
+    contacto: 'Gabriel Montenegro',
+    cuit: '20-25611873-4',
+    localidad: 'Hughes',
+    telefono: '+54 9 3462 66-0457',
+    plan: 'gratis',
+    ingenieroId: 'i1',
+    validacionProfesional: false,
+    consentimientoReputacionPago: true,
+    historicoPagos: { liquidaciones: 6, diasPromedioDesdeVencimiento: 6, enTermino: 0.67 },
+  },
+  {
+    id: 'p5',
+    razonSocial: 'Campos del Sur Santafesino S.A.',
+    contacto: 'Verónica Aguirre',
+    cuit: '30-71455208-3',
+    localidad: 'Villa Cañás',
+    telefono: '+54 9 3462 51-7720',
+    plan: 'pro',
+    ingenieroId: 'i2',
+    validacionProfesional: false,
+    consentimientoReputacionPago: false,
+    historicoPagos: { liquidaciones: 12, diasPromedioDesdeVencimiento: 0, enTermino: 0.92 },
+  },
+]
