@@ -15,6 +15,8 @@ type Props = {
   formato: (v: number) => string
   /** Encabezado de la columna de valores en la vista de tabla. */
   columnaValor: string
+  /** false = respeta el orden recibido (meses, tramos). Por defecto ordena de mayor a menor. */
+  ordenar?: boolean
 }
 
 /**
@@ -22,11 +24,11 @@ type Props = {
  * redondeado de 4 px y recto en la base; valor en la punta con tokens de texto;
  * tooltip por barra en hover y foco; vista de tabla alternativa.
  */
-export function BarrasHorizontales({ titulo, datos, formato, columnaValor }: Props) {
+export function BarrasHorizontales({ titulo, datos, formato, columnaValor, ordenar = true }: Props) {
   const [tabla, setTabla] = useState(false)
   const [activo, setActivo] = useState<string | null>(null)
   const max = Math.max(1, ...datos.map((d) => d.valor))
-  const ordenados = [...datos].sort((a, b) => b.valor - a.valor)
+  const ordenados = ordenar ? [...datos].sort((a, b) => b.valor - a.valor) : datos
 
   return (
     <figure>

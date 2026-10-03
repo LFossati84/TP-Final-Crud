@@ -271,7 +271,7 @@ export const crearSlicePartes: Slice<AccionesPartes> = (set, get) => ({
     const receta: RecetaAgronomica = {
       ...r,
       id: nuevoId('r'),
-      numero: siguienteNumero(s.recetas.map((x) => x.numero), `RA-${HOY.slice(0, 4)}`),
+      numero: siguienteNumero(s.recetas.map((x) => x.numero).filter((n) => n.startsWith(`RA-${HOY.slice(0, 4)}`)), `RA-${HOY.slice(0, 4)}`),
       estado: 'emitida',
     }
     set((st) => ({

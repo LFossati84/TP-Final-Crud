@@ -5,6 +5,15 @@ import { NoEncontrada } from '@/app/NoEncontrada'
 import { RootLayout } from '@/app/RootLayout'
 import type { HandleRuta } from '@/app/DeskLayout'
 import { Landing } from '@/features/inicio/Landing'
+import { CobranzaAdmin } from '@/features/admin/CobranzaAdmin'
+import { ContratistasAdmin } from '@/features/admin/ContratistasAdmin'
+import { DisputasAdmin } from '@/features/admin/Disputas'
+import { MetricasAdmin } from '@/features/admin/Metricas'
+import { VerificacionesAdmin } from '@/features/admin/Verificaciones'
+import { AplicacionesIngeniero } from '@/features/ingeniero/Aplicaciones'
+import { ClientesIngeniero } from '@/features/ingeniero/Clientes'
+import { CuadernosIngeniero } from '@/features/ingeniero/Cuadernos'
+import { RecetasIngeniero } from '@/features/ingeniero/Recetas'
 import { ArmarLiquidacion } from '@/features/contratista/cobros/ArmarLiquidacion'
 import { CobrosContratista } from '@/features/contratista/cobros/Cobros'
 import { DetalleLiquidacion } from '@/features/contratista/cobros/DetalleLiquidacion'
@@ -70,21 +79,22 @@ export const router = createBrowserRouter(
           path: 'ingeniero',
           element: <IngenieroLayout />,
           children: [
-            { index: true, handle: h('Mis clientes'), element: <EnConstruccion titulo="Mis clientes" fase={5} icono="usuarios" descripcion="Productores que te habilitaron." items={['Estado de cuadernos y aplicaciones por cliente']} /> },
-            { path: 'aplicaciones', handle: h('Aplicaciones a validar'), element: <EnConstruccion titulo="Aplicaciones a validar" fase={5} icono="sello" descripcion="Revisá y firmá las aplicaciones de fitosanitarios." items={['Controles automáticos de dosis, viento y receta', 'Validar y firmar u observar con motivo']} /> },
-            { path: 'recetas', handle: h('Recetas'), element: <EnConstruccion titulo="Recetas" fase={5} icono="receta" descripcion="Recetas agronómicas digitales." items={['Emitir recetas vinculadas a lotes y partes']} /> },
-            { path: 'cuadernos', handle: h('Cuadernos con validación'), element: <EnConstruccion titulo="Cuadernos con validación" fase={5} icono="libro" descripcion="Cuadernos de tus clientes con tu sello." items={['Sello "Validado por Ing. Agr." en cada aplicación']} /> },
+            { index: true, handle: h('Mis clientes'), element: <ClientesIngeniero /> },
+            { path: 'aplicaciones', handle: h('Aplicaciones a validar'), element: <AplicacionesIngeniero /> },
+            { path: 'aplicaciones/:id', handle: h('Aplicaciones a validar'), element: <AplicacionesIngeniero /> },
+            { path: 'recetas', handle: h('Recetas'), element: <RecetasIngeniero /> },
+            { path: 'cuadernos', handle: h('Cuadernos con validación'), element: <CuadernosIngeniero /> },
           ],
         },
         {
           path: 'admin',
           element: <AdminLayout />,
           children: [
-            { index: true, handle: h('Verificaciones'), element: <EnConstruccion titulo="Verificaciones" fase={5} icono="escudoCheck" descripcion="Cola de verificación documental." items={['Aprobar, pedir corrección o rechazar', 'El badge cambia en vivo en toda la app']} /> },
-            { path: 'contratistas', handle: h('Contratistas'), element: <EnConstruccion titulo="Contratistas" fase={5} icono="usuarios" descripcion="La red completa." items={['Niveles, vencimientos y actividad']} /> },
-            { path: 'disputas', handle: h('Disputas'), element: <EnConstruccion titulo="Disputas" fase={5} icono="balanza" descripcion="Mediación entre productores y contratistas." items={['Intervenir, mensajes y resolución']} /> },
-            { path: 'cobranza', handle: h('Cobranza'), element: <EnConstruccion titulo="Cobranza" fase={5} icono="moneda" descripcion="Indicadores de cobranza gestionada." items={['Monto gestionado, mora por antigüedad y cobro en término']} /> },
-            { path: 'metricas', handle: h('Métricas'), element: <EnConstruccion titulo="Métricas" fase={5} icono="tendencia" descripcion="Salud de la red." items={['Contratistas activos, partes por mes, tasa y tiempo de conformidad']} /> },
+            { index: true, handle: h('Verificaciones'), element: <VerificacionesAdmin /> },
+            { path: 'contratistas', handle: h('Contratistas'), element: <ContratistasAdmin /> },
+            { path: 'disputas', handle: h('Disputas'), element: <DisputasAdmin /> },
+            { path: 'cobranza', handle: h('Cobranza'), element: <CobranzaAdmin /> },
+            { path: 'metricas', handle: h('Métricas'), element: <MetricasAdmin /> },
           ],
         },
         { path: 'imprimir/cuaderno/:establecimiento/:campania', element: <CuadernoImprimible /> },

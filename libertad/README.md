@@ -46,7 +46,8 @@ Otros scripts:
 - **Modo sin señal**: botón "Con señal / Sin señal" en la barra (rol contratista). Los partes quedan en cola y al volver la señal se sincronizan con animación y aviso al productor.
 - `/productor` — Panel (KPIs, mapa con estado de lotes, alertas, calendario), **Partes** (conformar con reseña / observar / rechazar, controles automáticos), **Cuaderno** (filtros, completitud, validación) con **Exportar informe PDF** (`/imprimir/cuaderno/...`), **Contratistas** (filtros, lista, mapa, perfil, presupuesto, contratación, mis pedidos), **Establecimientos y lotes**, **Informes** y **Configuración** (validación profesional y consentimiento de reputación de pago).
 - **Cobranza** — Contratista (`/contratista/cobros`): listos para cobrar agrupados por productor, armado de liquidación (tarifas, IVA editable, condición y vencimiento), comprobante imprimible (`/imprimir/liquidacion/:id`), seguimiento con antigüedad de deuda, cuenta corriente, recordatorios por WhatsApp (maqueta) y automáticos, registro de cobro total o parcial, disputa. Productor (`/productor/pagos`): aceptar u observar, calendario de vencimientos, marcar como pagado con comprobante, historial. Reputación de pago con consentimiento.
-- `/ingeniero`, `/admin` — Layouts de escritorio con sidebar; las pantallas se completan en la Fase 5.
+- `/ingeniero` — Mis clientes, **Aplicaciones a validar** (controles automáticos, aplicado vs. receta, validar y firmar u observar con motivos), **Recetas** (emitir y vincular a partes, incluso para regularizar aplicaciones sin receta) y **Cuadernos con validación** con sello.
+- `/admin` — **Verificaciones** (aprobar / pedir corrección / rechazar, "si aprobás todo" y badge en vivo; vencimientos próximos con recordatorio), **Contratistas**, **Disputas** (intervenir y registrar resolución), **Cobranza** (gestionado, cobro en término, mora por antigüedad) y **Métricas** de red.
 - Barra superior: selector de rol, "Ver como" (otra persona del mismo rol), señal on/off (contratista), recorrido guiado, tema y reinicio de la demo.
 
 ## Stack
@@ -62,7 +63,7 @@ Vite + React + TypeScript estricto + Tailwind CSS + React Router + Zustand. Sin 
 | 2 | Contratista + modo offline | ✅ |
 | 3 | Productor (panel, partes, cuaderno + PDF, contratistas, lotes) | ✅ |
 | 4 | Cobranza + reputación de pago | ✅ |
-| 5 | Ingeniero agrónomo + Administrador | ⏳ |
+| 5 | Ingeniero agrónomo + Administrador | ✅ |
 | 6 | Recorridos guiados F1–F8, onboarding, planes, pulido | ⏳ |
 | 7 | Verificación final | ⏳ |
 

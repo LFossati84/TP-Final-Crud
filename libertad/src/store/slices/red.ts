@@ -18,6 +18,8 @@ export interface AccionesRed {
   revisarDocumento: (contratistaId: ID, documentoId: ID, estado: Exclude<EstadoDocumento, 'pendiente'>, nota?: string) => void
   /** Contratista: sube una versión nueva de un documento (queda pendiente de revisión). */
   cargarDocumento: (contratistaId: ID, tipo: TipoDocumento, archivo: string, vence?: string) => void
+  /** Admin: recordatorio al contratista por un documento por vencer. */
+  avisarVencimiento: (contratistaId: ID, documentoId: ID) => void
   solicitarPresupuesto: (p: Omit<Presupuesto, 'id' | 'fecha' | 'estado'>) => Presupuesto
   responderPresupuesto: (id: ID, respuesta: Omit<NonNullable<Presupuesto['respuesta']>, 'fecha'>) => void
   decidirPresupuesto: (id: ID, decision: 'aceptado' | 'rechazado') => void
@@ -88,6 +90,18 @@ export const crearSliceRed: Slice<AccionesRed> = (set, get) => ({
         ...s.notificaciones,
       ],
     })),
+
+  avisarVencimiento: (contratistaId, documentoId) =>
+    set((s) => {
+      const d = s.contratistas.find((c) => c.id === contratistaId)?.documentos.find((x) => x.id === documentoId)
+      if (!d) return {}
+      return {
+        notificaciones: [
+          notificacion('contratista', contratistaId, 'alerta', `La red te recuerda: ${etiquetaDocumento[d.tipo]}`, `Vence el ${d.vence?.split('-').reverse().join('/') ?? ''}. Subí la versión renovada para no perder el nivel.`, '/contratista/perfil#documentacion'),
+          ...s.notificaciones,
+        ],
+      }
+    }),
 
   solicitarPresupuesto: (datos) => {
     const s = get()
