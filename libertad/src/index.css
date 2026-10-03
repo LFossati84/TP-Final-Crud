@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+  }
+  body {
+    @apply bg-paper font-sans text-texto antialiased;
+  }
+  h1, h2, h3 {
+    @apply font-serif tracking-tight;
+  }
+  :focus-visible {
+    @apply outline-none ring-2 ring-foco ring-offset-2 ring-offset-paper;
+  }
+  ::selection {
+    @apply bg-trigo-200 text-tierra-950;
+  }
+}
+
+@layer utilities {
+  .num {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="es-AR">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="description" content="Proyecto Libertad II — Parte de labor, cuaderno del establecimiento, red de contratistas verificados y cobranza. Demo interactiva." />
+    <meta name="theme-color" content="#2B5926" />
+    <title>Proyecto Libertad II · Demo</title>
+    <script>
+      // Evita el parpadeo de tema: lee la preferencia de UI antes de pintar.
+      try {
+        var t = localStorage.getItem('libertad:tema');
+        if (t === 'oscuro' || (!t && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+          document.documentElement.classList.add('dark');
+        }
+      } catch (e) {}
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
