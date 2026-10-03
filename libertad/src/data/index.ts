@@ -16,6 +16,7 @@ import type {
   RecetaAgronomica,
   Resena,
 } from '@/domain/types'
+import { AGENDA, type TrabajoAgenda } from './agenda'
 import { CONTRATISTAS } from './contratistas'
 import { ESTABLECIMIENTOS, LOTES } from './establecimientos'
 import { INGENIEROS, RECETAS } from './ingenieros'
@@ -41,6 +42,7 @@ export interface Datos {
   presupuestos: Presupuesto[]
   notificaciones: Notificacion[]
   conversaciones: Conversacion[]
+  agenda: TrabajoAgenda[]
 }
 
 /** Escenario inicial de la demo. Devuelve copias para que "Reiniciar demo" sea limpio. */
@@ -72,7 +74,9 @@ export function crearDatosIniciales(): Datos {
     presupuestos: structuredClone(PRESUPUESTOS),
     notificaciones: structuredClone(NOTIFICACIONES),
     conversaciones: structuredClone(CONVERSACIONES),
+    agenda: structuredClone(AGENDA),
   }
 }
 
 export { LIQUIDACION_EXTERNA } from './partes'
+export type { TrabajoAgenda } from './agenda'

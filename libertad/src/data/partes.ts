@@ -238,9 +238,6 @@ export const PARTES: ParteLabor[] = [
     insumos: [{ insumoId: 'i-gli', dosis: 2.5 }, { insumoId: 'i-sme', dosis: 1.2 }],
     condiciones: { caldo: 80, viento: 13, direccionViento: 'N', temperatura: 22, humedad: 57 }, recetaId: 'r9',
     estado: 'observado', observacion: { motivo: 'fecha', detalle: 'La aplicación fue el sábado 10, no el viernes 9. Corregí la fecha así queda bien en el cuaderno.' } }),
-  armar({ id: 'pt28', numero: 'PL-0659', contratistaId: 'c1', loteId: 'l3', campania: '2026/27', labor: 'pulverizacion', maquinaId: 'm12', operario: 'Nahuel Ortiz',
-    fecha: '2026-10-14', horaInicio: '16:00', horaFin: '18:10', has: 84,
-    insumos: [{ insumoId: 'i-gli', dosis: 2.5 }], estado: 'borrador' }),
 
   // ─────────── Campaña 2026/27 · Las Acacias (Bonetto) ───────────
   armar({ id: 'pt30', numero: 'PL-0610', contratistaId: 'c3', loteId: 'l9', campania: '2026/27', labor: 'pulverizacion', maquinaId: 'm31', operario: 'Gustavo Arce',
@@ -248,6 +245,9 @@ export const PARTES: ParteLabor[] = [
     insumos: [{ insumoId: 'i-met', dosis: 6 }, { insumoId: 'i-dic', dosis: 0.12 }],
     condiciones: { caldo: 70, viento: 9, direccionViento: 'O', temperatura: 15, humedad: 68 }, recetaId: 'r11',
     estado: 'conformado', validacion: { estado: 'validada', ingenieroId: 'i2', fecha: '2026-09-02T18:00' } }),
+  armar({ id: 'pt28', numero: 'PL-0659', contratistaId: 'c1', loteId: 'l10', campania: '2026/27', labor: 'fertilizacion', maquinaId: 'm13', operario: 'Nahuel Ortiz',
+    fecha: '2026-10-14', horaInicio: '16:00', horaFin: '18:10', has: 60,
+    insumos: [{ insumoId: 'i-ure', dosis: 150 }], notas: 'Se cortó por lluvia, falta terminar.', estado: 'borrador' }),
   armar({ id: 'pt32', numero: 'PL-0615', contratistaId: 'c1', loteId: 'l11', campania: '2026/27', labor: 'pulverizacion', maquinaId: 'm11', operario: 'Sergio Bianchi',
     fecha: '2026-09-15', horaInicio: '07:30', horaFin: '10:20', has: 74,
     insumos: [{ insumoId: 'i-gli', dosis: 2.5 }, { insumoId: 'i-24d', dosis: 0.5 }],

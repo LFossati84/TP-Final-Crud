@@ -9,7 +9,16 @@ import { useSincronizarRol } from './useSincronizarRol'
 
 function BannerSinSenal() {
   const online = useDemo((s) => s.online)
+  const sincronizando = useDemo((s) => s.sincronizando)
   const pendientes = useDemo((s) => s.partes.filter((p) => p.estado === 'pendiente_sync').length)
+  if (sincronizando) {
+    return (
+      <div role="status" className="flex shrink-0 items-center gap-2 bg-cielo-100 px-4 py-2 text-xs font-semibold text-cielo-900" data-tour="banner-sync">
+        <Icon nombre="sync" tamano={16} className="animate-spin" />
+        <span className="flex-1">Señal recuperada · sincronizando {pendientes} {pendientes === 1 ? 'parte' : 'partes'}…</span>
+      </div>
+    )
+  }
   if (online) return null
   return (
     <div role="status" className="flex shrink-0 items-center gap-2 bg-trigo-200 px-4 py-2 text-xs font-semibold text-trigo-950" data-tour="banner-offline">

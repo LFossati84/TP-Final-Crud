@@ -33,7 +33,7 @@ export function useContadores(rol: Rol): Partial<Record<string, number>> {
         }
       case 'admin':
         return {
-          verificaciones: contratistas.reduce((n, c) => n + c.documentos.filter((d) => d.estado === 'pendiente').length, 0),
+          verificaciones: contratistas.reduce((n, c) => n + c.documentos.filter((d) => d.estado === 'pendiente' || d.renovacion).length, 0),
           disputas: disputas.filter((d) => d.estado !== 'resuelta').length,
         }
     }

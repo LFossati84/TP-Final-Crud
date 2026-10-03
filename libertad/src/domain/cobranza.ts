@@ -1,6 +1,7 @@
 import { diasHasta, sumarDias } from './reloj'
 import type {
   CondicionPago,
+  ParteLabor,
   Contratista,
   EstadoCobro,
   FechaISO,
@@ -141,4 +142,38 @@ export function cuentaCorriente(liquidaciones: Liquidacion[]): MovimientoCuenta[
     acumulado += m.debe - m.haber
     return { ...m, saldo: acumulado }
   })
+}
+
+/** Un parte conformado que todavía no está en ninguna liquidación. */
+export function listoParaCobrar(p: ParteLabor): boolean {
+  return p.estado === 'conformado' && !p.liquidacionId
+}
+
+export interface ResumenCobros {
+  aCobrar: number
+  vencido: number
+  cobradoMes: number
+  listos: number
+  pagosInformados: number
+}
+
+/** Tablero de cobros del contratista (montos con IVA). `mes` = 'YYYY-MM'. */
+export function resumenCobros(liquidaciones: Liquidacion[], partes: ParteLabor[], contratistaId: string, mes: string): ResumenCobros {
+  const propias = liquidaciones.filter((l) => l.contratistaId === contratistaId)
+  let aCobrar = 0
+  let vencido = 0
+  let cobradoMes = 0
+  for (const l of propias) {
+    const e = estadoCobro(l)
+    if (e === 'a_vencer') aCobrar += saldo(l)
+    if (e === 'vencido' || e === 'en_disputa') vencido += saldo(l)
+    for (const c of l.cobros) if (c.fecha.startsWith(mes)) cobradoMes += c.monto
+  }
+  return {
+    aCobrar,
+    vencido,
+    cobradoMes,
+    listos: partes.filter((p) => p.contratistaId === contratistaId && listoParaCobrar(p)).length,
+    pagosInformados: propias.filter((l) => l.estado === 'pago_informado').length,
+  }
 }

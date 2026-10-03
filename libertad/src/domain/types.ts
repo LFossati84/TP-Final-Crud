@@ -47,6 +47,8 @@ export interface Documento {
   cargado: FechaISO
   vence?: FechaISO
   nota?: string
+  /** Versión nueva cargada por el contratista, en revisión. La anterior sigue vigente mientras tanto. */
+  renovacion?: { archivo: string; cargado: FechaISO; vence?: FechaISO }
 }
 
 export type TipoMaquina =

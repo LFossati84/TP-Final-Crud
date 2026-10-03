@@ -12,7 +12,7 @@ import { Chip } from '@/ui/Chip'
 import { EmptyState, ErrorState, SkeletonLista } from '@/ui/EmptyState'
 import { Estrellas } from '@/ui/Estrellas'
 import { Checkbox, Input, OpcionesGrandes, Select, Textarea, Toggle } from '@/ui/FormField'
-import { Icon, type NombreIcono } from '@/ui/Icon'
+import { Icon } from '@/ui/Icon'
 import { Modal } from '@/ui/Modal'
 import { ProgressBar } from '@/ui/ProgressBar'
 import { Stat } from '@/ui/Stat'
@@ -24,18 +24,12 @@ import { Tabs } from '@/ui/Tabs'
 import { Timeline } from '@/ui/Timeline'
 import { toast } from '@/ui/toast-store'
 import { VerificationBadge } from '@/ui/VerificationBadge'
+import { ICONO_LABOR } from '@/ui/iconosDominio'
 
 const ESCALAS = ['tierra', 'verde', 'trigo', 'rojo', 'cielo'] as const
 const PASOS_ESCALA = ['50', '100', '200', '300', '400', '500', '600', '700', '800', '900', '950'] as const
 const SEMANTICOS = ['paper', 'paper-2', 'paper-3', 'superficie', 'borde', 'borde-fuerte', 'texto', 'texto-suave', 'accion', 'acento', 'peligro', 'barra'] as const
 
-const ICONO_LABOR: Record<TipoLabor, NombreIcono> = {
-  siembra: 'brote',
-  pulverizacion: 'gota',
-  fertilizacion: 'capas',
-  cosecha: 'trigo',
-  laboreo: 'tractor',
-}
 
 function Seccion({ id, titulo, children }: { id: string; titulo: string; children: ReactNode }) {
   return (

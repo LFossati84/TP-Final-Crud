@@ -173,6 +173,16 @@ export const etiquetaDocumento: Record<TipoDocumento, string> = {
   habilitacion_aplicador: 'Habilitación de aplicador',
 }
 
+/** Nombre corto para avisos ("Tu ART vence…"). */
+export const etiquetaDocumentoCorta: Record<TipoDocumento, string> = {
+  identidad: 'Identidad',
+  cuit: 'CUIT',
+  situacion_impositiva: 'Constancia fiscal',
+  art: 'ART',
+  seguro_maquinaria: 'Seguro de maquinaria',
+  habilitacion_aplicador: 'Habilitación de aplicador',
+}
+
 export const etiquetaCondicionPago: Record<CondicionPago, string> = {
   contado: 'Contado',
   '15_dias': '15 días',

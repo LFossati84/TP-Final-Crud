@@ -29,6 +29,7 @@ export const useDemo = create<DemoState>()((...a) => ({
   productorId: 'p1',
   ingenieroId: 'i1',
   online: true,
+  sincronizando: false,
   tema: temaInicial(),
   ...crearSliceSesion(...a),
   ...crearSlicePartes(...a),

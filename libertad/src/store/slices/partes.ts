@@ -68,7 +68,8 @@ export const crearSlicePartes: Slice<AccionesPartes> = (set, get) => ({
   guardarBorrador: (p) =>
     set((s) => {
       const existe = s.partes.some((x) => x.id === p.id)
-      const borrador: ParteLabor = { ...p, estado: 'borrador', historial: [{ fecha: ahora(), estado: 'borrador', actor: 'contratista' }] }
+      const numero = p.numero || siguienteNumero(s.partes.map((x) => x.numero), 'PL')
+      const borrador: ParteLabor = { ...p, numero, estado: 'borrador', historial: [{ fecha: ahora(), estado: 'borrador', actor: 'contratista' }] }
       return { partes: existe ? reemplazar(s.partes, p.id, () => borrador) : [borrador, ...s.partes] }
     }),
 

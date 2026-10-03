@@ -5,6 +5,11 @@ import { NoEncontrada } from '@/app/NoEncontrada'
 import { RootLayout } from '@/app/RootLayout'
 import type { HandleRuta } from '@/app/DeskLayout'
 import { Landing } from '@/features/inicio/Landing'
+import { DetalleParte } from '@/features/contratista/DetalleParte'
+import { InicioContratista } from '@/features/contratista/Inicio'
+import { MisTrabajos } from '@/features/contratista/MisTrabajos'
+import { NuevoParteRuta } from '@/features/contratista/nuevo-parte/NuevoParte'
+import { PerfilContratista } from '@/features/contratista/Perfil'
 import { Kit } from '@/features/kit/Kit'
 
 const h = (titulo: string): HandleRuta => ({ titulo })
@@ -20,11 +25,12 @@ export const router = createBrowserRouter(
           path: 'contratista',
           element: <ContratistaLayout />,
           children: [
-            { index: true, element: <EnConstruccion movil titulo="Inicio" fase={2} icono="inicio" descripcion="Tu día de trabajo de un vistazo." items={['Trabajos de hoy y partes pendientes de conformidad', 'Resumen de cobros: a cobrar, vencido y cobrado en el mes', 'Alertas de documentos por vencer (ART en 6 días)']} /> },
-            { path: 'nuevo-parte', element: <EnConstruccion movil titulo="Nuevo parte" fase={2} icono="mas" descripcion="Carga en 5 pasos, en menos de un minuto." items={['Lote con mapa y "usar ubicación actual"', 'Labor y maquinaria', 'Hectáreas, horas y fecha autocompletadas', 'Insumos y condiciones (solo aplicaciones)', 'Fotos, firma en pantalla y envío, con o sin señal']} /> },
-            { path: 'trabajos/*', element: <EnConstruccion movil titulo="Mis trabajos" fase={2} icono="lista" descripcion="Todos tus partes, filtrables por estado." items={['Borrador, Enviado, Observado, Conformado, En disputa', 'Detalle del parte con historial', 'Corregir y reenviar partes observados']} /> },
+            { index: true, element: <InicioContratista /> },
+            { path: 'nuevo-parte', element: <NuevoParteRuta /> },
+            { path: 'trabajos', element: <MisTrabajos /> },
+            { path: 'trabajos/:id', element: <DetalleParte /> },
             { path: 'cobros/*', element: <EnConstruccion movil titulo="Cobros" fase={4} icono="billetera" descripcion="De parte conformado a cobro conciliado." items={['Partes listos para cobrar', 'Armar liquidación y comprobante', 'Seguimiento, recordatorios por WhatsApp y registro de cobros']} /> },
-            { path: 'perfil', element: <EnConstruccion movil titulo="Perfil" fase={2} icono="usuario" descripcion="Tu empresa, flota y verificación." items={['Datos de la empresa, flota y zonas', 'Documentación con semáforo de vencimientos', 'Nivel de verificación, reputación y reseñas']} /> },
+            { path: 'perfil', element: <PerfilContratista /> },
           ],
         },
         {

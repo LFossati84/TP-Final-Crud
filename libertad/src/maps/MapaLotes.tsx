@@ -1,4 +1,5 @@
-import { useId, type KeyboardEvent, type ReactNode } from 'react'
+import type { KeyboardEvent, ReactNode } from 'react'
+import { useSvgId } from '@/ui/useSvgId'
 import { etiquetaCultivo, num } from '@/domain/format'
 import type { Campania, Cultivo, Establecimiento, ID, Lote } from '@/domain/types'
 import { cx } from '@/ui/cx'
@@ -42,7 +43,7 @@ type Props = {
 }
 
 export function MapaLotes({ establecimiento, lotes, campania, estadoLote, seleccionado, onSeleccionar, ubicacion, leyenda, className, compacto = false }: Props) {
-  const idPatron = useId()
+  const idPatron = useSvgId('mapa')
   const propios = lotes.filter((l) => l.establecimientoId === establecimiento.id)
 
   const teclado = (e: KeyboardEvent, l: Lote) => {

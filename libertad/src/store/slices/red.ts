@@ -33,7 +33,16 @@ export const crearSliceRed: Slice<AccionesRed> = (set, get) => ({
     set((s) => ({
       contratistas: reemplazar(s.contratistas, contratistaId, (c) => ({
         ...c,
-        documentos: c.documentos.map((d) => (d.id === documentoId ? { ...d, estado, nota } : d)),
+        documentos: c.documentos.map((d) => {
+          if (d.id !== documentoId) return d
+          // Renovación: si se aprueba, reemplaza a la versión vigente; si no, se descarta y queda la anterior.
+          if (d.renovacion) {
+            return estado === 'aprobado'
+              ? { ...d, ...d.renovacion, estado: 'aprobado' as const, nota: undefined, renovacion: undefined }
+              : { ...d, nota, renovacion: undefined }
+          }
+          return { ...d, estado, nota }
+        }),
       })),
     }))
     const s = get()
@@ -64,6 +73,10 @@ export const crearSliceRed: Slice<AccionesRed> = (set, get) => ({
     set((s) => ({
       contratistas: reemplazar(s.contratistas, contratistaId, (c) => {
         const existente = c.documentos.find((d) => d.tipo === tipo)
+        // Si el documento vigente está aprobado, la versión nueva queda como renovación en revisión.
+        if (existente && existente.estado === 'aprobado') {
+          return { ...c, documentos: c.documentos.map((d) => (d.tipo === tipo ? { ...d, renovacion: { archivo, cargado: HOY, vence } } : d)) }
+        }
         const nuevo = { id: existente?.id ?? nuevoId('d'), tipo, estado: 'pendiente' as const, archivo, cargado: HOY, vence }
         return {
           ...c,

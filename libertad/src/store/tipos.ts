@@ -16,6 +16,8 @@ export interface Sesion {
   productorId: ID
   ingenieroId: ID
   online: boolean
+  /** Animación de sincronización en curso (al recuperar señal). */
+  sincronizando: boolean
   tema: Tema
 }
 

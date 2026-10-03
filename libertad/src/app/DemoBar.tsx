@@ -55,9 +55,17 @@ export function DemoBar() {
     navigate(RUTA_INICIO[r])
     setMenu(false)
   }
+  const reconectar = useDemo((s) => s.reconectar)
   const alternarSenal = () => {
-    setOnline(!online)
-    if (online) toast.alerta('Modo sin señal activado', 'Los partes se guardan en el teléfono y se envían al recuperar señal.')
+    if (online) {
+      setOnline(false)
+      toast.alerta('Modo sin señal activado', 'Los partes se guardan en el teléfono y se envían al recuperar señal.')
+      return
+    }
+    void reconectar().then((n) => {
+      if (n > 0) toast.ok(`${n === 1 ? 'Se sincronizó 1 parte' : `Se sincronizaron ${n} partes`}`, 'El productor ya recibió la notificación.')
+      else toast.info('Señal recuperada')
+    })
   }
 
   const botonBarra = 'inline-flex min-h-10 shrink-0 items-center whitespace-nowrap gap-2 rounded-lg px-3 text-sm font-semibold transition hover:bg-barra-2 [@media(pointer:coarse)]:min-h-tactil'
@@ -68,7 +76,7 @@ export function DemoBar() {
         <Link to="/" className="flex shrink-0 items-center gap-2 rounded-lg pr-2 focus-visible:ring-offset-barra" aria-label="Proyecto Libertad II · inicio de la demo">
           <img src={`${import.meta.env.BASE_URL}favicon.svg`} alt="" className="h-8 w-8" />
           <span className="hidden font-serif text-lg leading-none sm:inline">Libertad II</span>
-          <span className="rounded bg-acento px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-sobre-acento">Demo</span>
+          <span className="hidden rounded bg-acento px-1.5 py-0.5 sm:inline text-[10px] font-bold uppercase tracking-wider text-sobre-acento">Demo</span>
         </Link>
 
         {/* Selector de rol: segmentado en desktop, select en mobile */}

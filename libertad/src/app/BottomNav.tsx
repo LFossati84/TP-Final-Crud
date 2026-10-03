@@ -20,7 +20,7 @@ export function BottomNav() {
                 data-tour={`nav-${item.clave}`}
                 className={({ isActive }) =>
                   cx(
-                    'relative flex min-h-16 flex-col items-center justify-end gap-0.5 px-0.5 pb-2 text-[11px] font-semibold tracking-tight transition',
+                    'relative flex min-h-16 flex-col items-center justify-end gap-0.5 px-0.5 pb-2 text-[10px] font-semibold tracking-tight transition',
                     isActive ? 'text-verde-800' : 'text-texto-suave hover:text-texto',
                   )
                 }

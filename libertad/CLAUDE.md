@@ -47,6 +47,8 @@ src/
 - Componentes genéricos de UI con nombre en inglés (`Button`, `Card`); todo lo del dominio en español (`ParteLabor`, `conformarParte`, `Liquidacion`).
 - Un componente por archivo; props tipadas con `type`, sin `React.FC`.
 - Cada pantalla contempla estados **vacío / carga / error**.
+- Campos numéricos con coma decimal: usar `InputNumero` (ui/), no `Input` con `Number()` en cada tecla.
+- Resolver nombres de lotes/productores/insumos con `useCatalogo()`; no filtrar listas completas dentro de cada render.
 
 ## Reglas de la demo
 

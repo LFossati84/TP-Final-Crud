@@ -28,11 +28,16 @@ export interface AccionesSesion {
   setProductor: (id: ID) => void
   setIngeniero: (id: ID) => void
   setOnline: (online: boolean) => void
+  /**
+   * Recupera la señal y, si hay partes en cola, simula la sincronización
+   * (~2 s). Devuelve cuántos partes se enviaron.
+   */
+  reconectar: () => Promise<number>
   setTema: (tema: Tema) => void
   reiniciar: () => void
 }
 
-export const crearSliceSesion: Slice<AccionesSesion> = (set) => ({
+export const crearSliceSesion: Slice<AccionesSesion> = (set, get) => ({
   setRol: (rol) => {
     guardarPreferencia(CLAVE_ROL, rol)
     set({ rol })
@@ -41,11 +46,23 @@ export const crearSliceSesion: Slice<AccionesSesion> = (set) => ({
   setProductor: (productorId) => set({ productorId }),
   setIngeniero: (ingenieroId) => set({ ingenieroId }),
   setOnline: (online) => set({ online }),
+  reconectar: () => {
+    const pendientes = get().partes.filter((p) => p.estado === 'pendiente_sync').length
+    set({ online: true, sincronizando: pendientes > 0 })
+    if (pendientes === 0) return Promise.resolve(0)
+    return new Promise((resolve) => {
+      window.setTimeout(() => {
+        const n = get().sincronizar()
+        set({ sincronizando: false })
+        resolve(n)
+      }, 2000)
+    })
+  },
   setTema: (tema) => {
     guardarPreferencia(CLAVE_TEMA, tema)
     document.documentElement.classList.toggle('dark', tema === 'oscuro')
     set({ tema })
   },
   reiniciar: () =>
-    set({ ...crearDatosIniciales(), online: true, contratistaId: 'c1', productorId: 'p1', ingenieroId: 'i1' }),
+    set({ ...crearDatosIniciales(), online: true, sincronizando: false, contratistaId: 'c1', productorId: 'p1', ingenieroId: 'i1' }),
 })
