@@ -106,7 +106,7 @@ export function CuadernoProductor() {
       </div>
 
       <div className="grid gap-6 lg:grid-cols-[1fr_20rem]">
-        <Card>
+        <Card data-tour="timeline-cuaderno">
           <div className="mb-4 flex flex-wrap gap-1.5" role="radiogroup" aria-label="Tipo de registro">
             {TIPOS.map((t) => (
               <button

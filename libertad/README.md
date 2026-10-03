@@ -49,6 +49,21 @@ Otros scripts:
 - `/ingeniero` — Mis clientes, **Aplicaciones a validar** (controles automáticos, aplicado vs. receta, validar y firmar u observar con motivos), **Recetas** (emitir y vincular a partes, incluso para regularizar aplicaciones sin receta) y **Cuadernos con validación** con sello.
 - `/admin` — **Verificaciones** (aprobar / pedir corrección / rechazar, "si aprobás todo" y badge en vivo; vencimientos próximos con recordatorio), **Contratistas**, **Disputas** (intervenir y registrar resolución), **Cobranza** (gestionado, cobro en término, mora por antigüedad) y **Métricas** de red.
 - Barra superior: selector de rol, "Ver como" (otra persona del mismo rol), señal on/off (contratista), recorrido guiado, tema y reinicio de la demo.
+- **Recorrido guiado** — botón dorado de la barra. Elegís un flujo (F1–F8) y la demo prepara el escenario, resalta cada paso con un tooltip numerado y avanza cuando hacés el clic real. Cuando el flujo pasa a otro usuario muestra "Ahora sos el productor…" y cambia de rol solo. Podés salir en cualquier paso.
+
+  | Flujo | Qué muestra | Pasos |
+  |---|---|---|
+  | F1 | Parte sin señal → sincronización → conformidad → cuaderno → reputación → liquidación → recordatorio → pago informado → cobro conciliado | 30 |
+  | F2 | Buscar pulverizador verificado y pedir presupuesto; el contratista responde y el productor acepta | 10 |
+  | F3 | Exportar el cuaderno a PDF con sello de validación | 4 |
+  | F4 | El administrador revisa documentos y el contratista pasa a Verificado (badge en vivo) | 4 |
+  | F5 | Parte observado por hectáreas, corrección y reenvío, conformidad | 7 |
+  | F6 | El ingeniero observa una dosis fuera de receta, el contratista corrige y el ingeniero valida con sello | 10 |
+  | F7 | Liquidación en mora, recordatorios escalonados, disputa e intervención del administrador | 10 |
+  | F8 | ART por vencer: alerta al contratista y advertencia en el directorio del productor | 5 |
+
+- `/onboarding` — Alta en 3 pasos (rol, zona, perfil con CUIT enmascarado); al terminar entra a la demo con ese rol. No crea cuentas reales.
+- `/planes` — Planes ilustrativos para productor y contratista, con precios "A definir".
 
 ## Stack
 
@@ -64,7 +79,7 @@ Vite + React + TypeScript estricto + Tailwind CSS + React Router + Zustand. Sin 
 | 3 | Productor (panel, partes, cuaderno + PDF, contratistas, lotes) | ✅ |
 | 4 | Cobranza + reputación de pago | ✅ |
 | 5 | Ingeniero agrónomo + Administrador | ✅ |
-| 6 | Recorridos guiados F1–F8, onboarding, planes, pulido | ⏳ |
+| 6 | Recorridos guiados F1–F8, onboarding, planes, pulido | ✅ |
 | 7 | Verificación final | ⏳ |
 
 ## Checklist final

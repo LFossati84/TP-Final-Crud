@@ -249,6 +249,7 @@ function DetalleAplicacion({ parte, onCerrar }: { parte: ParteLabor; onCerrar: (
           {hallazgos.length ? <p className="rounded-xl bg-trigo-50 p-3 text-sm text-trigo-900">Los controles marcan {hallazgos.length} {hallazgos.length === 1 ? 'alerta' : 'alertas'}. Si validás igual, dejá constancia en la nota.</p> : null}
           <Textarea label="Nota profesional" opcional value={notaValidacion} onChange={(e) => setNotaValidacion(e.target.value)} rows={2} placeholder="Ej.: dosis y condiciones conformes a la receta." />
           <Checkbox
+            tour="declaro-validacion"
             checked={declaro}
             onChange={(e) => setDeclaro(e.target.checked)}
             label={`Firmo como Ing. Agr. ${ing?.nombre ?? ''} – ${ing?.matricula ?? ''}`}

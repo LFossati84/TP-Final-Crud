@@ -109,10 +109,10 @@ export function Textarea({ label, hint, error, opcional, className, id: idProp, 
   )
 }
 
-export function Checkbox({ label, descripcion, className, ...resto }: { label: ReactNode; descripcion?: ReactNode; className?: string } & Omit<InputHTMLAttributes<HTMLInputElement>, 'type' | 'className'>) {
+export function Checkbox({ label, descripcion, className, tour, ...resto }: { label: ReactNode; descripcion?: ReactNode; className?: string; tour?: string } & Omit<InputHTMLAttributes<HTMLInputElement>, 'type' | 'className'>) {
   const id = useId()
   return (
-    <label htmlFor={id} className={cx('flex min-h-tactil cursor-pointer items-start gap-3 rounded-xl py-2', className)}>
+    <label htmlFor={id} className={cx('flex min-h-tactil cursor-pointer items-start gap-3 rounded-xl py-2', className)} data-tour={tour}>
       <input id={id} type="checkbox" className="mt-0.5 h-5 w-5 shrink-0 rounded border-borde-fuerte accent-[rgb(var(--accion))]" {...resto} />
       <span className="min-w-0">
         <span className="block text-sm font-semibold text-texto">{label}</span>

@@ -53,7 +53,7 @@ export function SolicitarModal({ contratista, tipo, onCerrar, laborInicial }: Pr
           <Select label="Labor" value={labor} onChange={(e) => setLabor(e.target.value as TipoLabor)} opciones={contratista.servicios.map((s) => ({ valor: s, texto: etiquetaLabor[s] }))} />
           <Select label="Establecimiento" value={estId} onChange={(e) => { setEstId(e.target.value); setLoteIds([]) }} opciones={ests.map((e) => ({ valor: e.id, texto: e.nombre }))} />
         </div>
-        <fieldset>
+        <fieldset data-tour="pedido-lotes">
           <legend className="mb-1 text-sm font-semibold">Lotes</legend>
           <div className="grid gap-x-3 sm:grid-cols-2">
             {lotes.map((l) => (

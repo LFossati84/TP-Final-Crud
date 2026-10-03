@@ -17,7 +17,7 @@ export function ToastViewport() {
     <div
       aria-live="polite"
       aria-atomic="false"
-      className="pointer-events-none fixed inset-x-0 bottom-4 z-[90] print:hidden flex flex-col items-center gap-2 px-4 sm:bottom-4 sm:right-auto sm:items-start"
+      className="pointer-events-none fixed inset-x-0 top-16 z-[90] flex flex-col items-center gap-2 px-4 print:hidden sm:bottom-4 sm:right-auto sm:top-auto sm:items-start"
     >
       {toasts.map((t) => {
         const e = ESTILO[t.tipo]

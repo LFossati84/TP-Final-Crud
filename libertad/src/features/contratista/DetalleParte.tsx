@@ -302,9 +302,16 @@ function CorregirParte({ parte, onCerrar }: { parte: ParteLabor; onCerrar: () =>
   const cat = useCatalogo()
   const corregir = useDemo((s) => s.corregirParte)
   const lote = cat.lote(parte.loteId)
-  const [has, setHas] = useState(parte.has)
+  const [has, setHas] = useState(parte.observacion?.motivo === 'hectareas' && lote ? lote.has : parte.has)
   const [fechaP, setFechaP] = useState(parte.fecha)
-  const [insumos, setInsumos] = useState(parte.insumos.map((i) => ({ ...i })))
+  // Si el ingeniero observó la dosis, se propone la dosis de la receta.
+  const receta = cat.receta(parte.recetaId)
+  const [insumos, setInsumos] = useState(() =>
+    parte.insumos.map((i) => {
+      const enReceta = receta?.productos.find((r) => r.insumoId === i.insumoId)
+      return parte.validacion?.motivos?.includes('dosis_alta') && enReceta && i.dosis > enReceta.dosis * 1.25 ? { ...i, dosis: enReceta.dosis } : { ...i }
+    }),
+  )
   const [nota, setNota] = useState(() => {
     if (parte.observacion?.motivo === 'hectareas' && lote) return `Corregí las hectáreas: son ${num(lote.has, 1)} has, cargué mal el número.`
     if (parte.observacion?.motivo === 'fecha') return 'Corregí la fecha de aplicación.'

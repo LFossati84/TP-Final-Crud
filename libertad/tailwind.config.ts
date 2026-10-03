@@ -161,6 +161,7 @@ export default {
         'entrar-derecha': { from: { opacity: '0', transform: 'translateX(16px)' }, to: { opacity: '1', transform: 'none' } },
         aparecer: { from: { opacity: '0' }, to: { opacity: '1' } },
         pulso: { '0%,100%': { opacity: '1' }, '50%': { opacity: '0.45' } },
+        carga: { from: { transform: 'translateX(-100%)' }, to: { transform: 'translateX(300%)' } },
       },
       animation: {
         'entrar-arriba': 'entrar-arriba 180ms ease-out both',

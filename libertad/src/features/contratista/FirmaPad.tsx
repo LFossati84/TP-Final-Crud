@@ -79,6 +79,7 @@ export function FirmaPad({ valor, onCambiar, etiqueta = 'Firmá con el dedo dent
           onPointerUp={terminar}
           onPointerLeave={terminar}
           data-tour="firma"
+          data-firmado={vacia ? undefined : 'true'}
         />
         {vacia ? <p className="pointer-events-none absolute inset-0 flex items-center justify-center text-sm text-tierra-400">{etiqueta}</p> : null}
         <span className="pointer-events-none absolute bottom-8 left-6 right-6 border-b border-tierra-300" aria-hidden />

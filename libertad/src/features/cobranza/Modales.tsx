@@ -22,7 +22,7 @@ function AdjuntoSimulado({ archivo, onCambiar, etiqueta }: { archivo: string; on
         <input type="file" accept="application/pdf,image/*" className="sr-only" onChange={(e) => onCambiar(e.target.files?.[0]?.name ?? '')} />
       </label>
       {!archivo ? (
-        <button type="button" onClick={() => onCambiar('comprobante-transferencia-151026.pdf')} className="mt-1 min-h-9 text-xs font-semibold text-verde-800 hover:underline">
+        <button type="button" onClick={() => onCambiar('comprobante-transferencia-151026.pdf')} className="mt-1 min-h-9 text-xs font-semibold text-verde-800 hover:underline" data-tour="usar-comprobante-ejemplo">
           Usar un comprobante de ejemplo
         </button>
       ) : null}

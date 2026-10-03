@@ -43,7 +43,7 @@ export function PasoInsumos({ b, c, lote, est, cambiar, errores }: Props) {
   const tomarEstacion = () => {
     setConsultando(true)
     window.setTimeout(() => {
-      cambiar({ condiciones: { ...b.condiciones, viento: '11', direccionViento: 'NE', temperatura: '19', humedad: '62' } })
+      cambiar({ condiciones: online ? { ...b.condiciones, viento: '11', direccionViento: 'NE', temperatura: '19', humedad: '62' } : { ...b.condiciones, viento: '10', direccionViento: 'NE', temperatura: '18', humedad: '64' } })
       setConsultando(false)
     }, 900)
   }
@@ -105,11 +105,11 @@ export function PasoInsumos({ b, c, lote, est, cambiar, errores }: Props) {
         <legend className="sr-only">Condiciones al aplicar</legend>
         <div className="mb-3 flex items-center justify-between gap-2">
           <p className="text-sm font-semibold text-texto">Condiciones al aplicar</p>
-          <Button variante="secundario" tamano="sm" icono={consultando ? undefined : 'viento'} cargando={consultando} onClick={tomarEstacion} disabled={!online}>
-            {online ? 'Tomar de la estación' : 'Sin señal'}
+          <Button variante="secundario" tamano="sm" icono={consultando ? undefined : 'viento'} cargando={consultando} onClick={tomarEstacion} data-tour="leer-anemometro">
+            {online ? 'Tomar de la estación' : 'Leer anemómetro'}
           </Button>
         </div>
-        {!online ? <p className="mb-2 text-xs text-texto-suave">Sin señal: cargalas a mano desde el anemómetro de la máquina.</p> : null}
+        {!online ? <p className="mb-2 text-xs text-texto-suave">Sin señal: se leen del anemómetro de la máquina por Bluetooth o se cargan a mano.</p> : null}
         <div className="grid grid-cols-2 gap-3">
           <Input label="Viento" inputMode="decimal" value={b.condiciones.viento} onChange={(e) => cambiar({ condiciones: { ...b.condiciones, viento: e.target.value } })} sufijo="km/h" />
           <Select

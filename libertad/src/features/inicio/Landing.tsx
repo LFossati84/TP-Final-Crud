@@ -43,8 +43,11 @@ export function Landing() {
               Continuar como {etiquetaRol[rolActual].toLowerCase()}
               <Icon nombre="flechaDerecha" />
             </button>
-            <Link to="/kit" className="inline-flex min-h-12 items-center gap-2 rounded-xl border border-borde-fuerte bg-superficie px-5 font-semibold transition hover:bg-paper-2">
-              <Icon nombre="grilla" /> Sistema de diseño
+            <Link to="/onboarding" className="inline-flex min-h-12 items-center gap-2 rounded-xl border border-borde-fuerte bg-superficie px-5 font-semibold transition hover:bg-paper-2">
+              <Icon nombre="usuario" /> Crear cuenta
+            </Link>
+            <Link to="/planes" className="inline-flex min-h-12 items-center gap-2 rounded-xl px-3 font-semibold text-verde-800 transition hover:bg-paper-2">
+              Ver planes
             </Link>
           </div>
         </div>
@@ -120,8 +123,9 @@ export function Landing() {
         </ol>
       </section>
 
-      <footer className="mt-14 border-t border-borde pt-6 text-sm text-texto-suave">
-        Demo ilustrativa con datos ficticios. No procesa pagos ni emite comprobantes fiscales y no se conecta a ningún servicio real.
+      <footer className="mt-14 flex flex-wrap items-center justify-between gap-3 border-t border-borde pt-6 text-sm text-texto-suave">
+        <span>Demo ilustrativa con datos ficticios. No procesa pagos ni emite comprobantes fiscales y no se conecta a ningún servicio real.</span>
+        <Link to="/kit" className="inline-flex items-center gap-1.5 font-semibold text-verde-800 hover:underline"><Icon nombre="grilla" tamano={16} /> Sistema de diseño</Link>
       </footer>
     </main>
   )

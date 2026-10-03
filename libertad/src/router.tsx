@@ -1,105 +1,85 @@
+import type { ComponentType } from 'react'
 import { createBrowserRouter } from 'react-router'
+import { CargaInicial } from '@/app/CargaInicial'
+import { ErrorRuta } from '@/app/ErrorRuta'
 import { AdminLayout, ContratistaLayout, IngenieroLayout, ProductorLayout } from '@/app/Layouts'
-import { EnConstruccion } from '@/app/EnConstruccion'
 import { NoEncontrada } from '@/app/NoEncontrada'
 import { RootLayout } from '@/app/RootLayout'
 import type { HandleRuta } from '@/app/DeskLayout'
-import { Landing } from '@/features/inicio/Landing'
-import { CobranzaAdmin } from '@/features/admin/CobranzaAdmin'
-import { ContratistasAdmin } from '@/features/admin/ContratistasAdmin'
-import { DisputasAdmin } from '@/features/admin/Disputas'
-import { MetricasAdmin } from '@/features/admin/Metricas'
-import { VerificacionesAdmin } from '@/features/admin/Verificaciones'
-import { AplicacionesIngeniero } from '@/features/ingeniero/Aplicaciones'
-import { ClientesIngeniero } from '@/features/ingeniero/Clientes'
-import { CuadernosIngeniero } from '@/features/ingeniero/Cuadernos'
-import { RecetasIngeniero } from '@/features/ingeniero/Recetas'
-import { ArmarLiquidacion } from '@/features/contratista/cobros/ArmarLiquidacion'
-import { CobrosContratista } from '@/features/contratista/cobros/Cobros'
-import { DetalleLiquidacion } from '@/features/contratista/cobros/DetalleLiquidacion'
-import { DetalleParte } from '@/features/contratista/DetalleParte'
-import { InicioContratista } from '@/features/contratista/Inicio'
-import { MisTrabajos } from '@/features/contratista/MisTrabajos'
-import { NuevoParteRuta } from '@/features/contratista/nuevo-parte/NuevoParte'
-import { PerfilContratista } from '@/features/contratista/Perfil'
-import { Kit } from '@/features/kit/Kit'
-import { ConfiguracionProductor } from '@/features/productor/Configuracion'
-import { DirectorioContratistas } from '@/features/productor/contratistas/Directorio'
-import { PerfilRed } from '@/features/productor/contratistas/PerfilRed'
-import { CuadernoProductor } from '@/features/productor/Cuaderno'
-import { InformesProductor } from '@/features/productor/Informes'
-import { LotesProductor } from '@/features/productor/Lotes'
-import { PanelProductor } from '@/features/productor/Panel'
-import { PagosProductor } from '@/features/productor/Pagos'
-import { PartesProductor } from '@/features/productor/Partes'
-import { CuadernoImprimible } from '@/print/CuadernoImprimible'
-import { LiquidacionImprimible } from '@/print/LiquidacionImprimible'
 
 const h = (titulo: string): HandleRuta => ({ titulo })
+
+/** Carga diferida por pantalla: cada sección se descarga recién cuando se visita. */
+function pagina<M, K extends keyof M>(cargar: () => Promise<M>, nombre: K) {
+  return async () => ({ Component: (await cargar())[nombre] as ComponentType })
+}
 
 export const router = createBrowserRouter(
   [
     {
       element: <RootLayout />,
+      errorElement: <ErrorRuta />,
+      HydrateFallback: CargaInicial,
       children: [
-        { index: true, element: <Landing /> },
-        { path: 'kit', element: <Kit />, handle: h('Sistema de diseño') },
+        { index: true, lazy: pagina(() => import('@/features/inicio/Landing'), 'Landing') },
+        { path: 'kit', lazy: pagina(() => import('@/features/kit/Kit'), 'Kit'), handle: h('Sistema de diseño') },
         {
           path: 'contratista',
           element: <ContratistaLayout />,
           children: [
-            { index: true, element: <InicioContratista /> },
-            { path: 'nuevo-parte', element: <NuevoParteRuta /> },
-            { path: 'trabajos', element: <MisTrabajos /> },
-            { path: 'trabajos/:id', element: <DetalleParte /> },
-            { path: 'cobros', element: <CobrosContratista /> },
-            { path: 'cobros/nueva', element: <ArmarLiquidacion /> },
-            { path: 'cobros/:id', element: <DetalleLiquidacion /> },
-            { path: 'perfil', element: <PerfilContratista /> },
+            { index: true, lazy: pagina(() => import('@/features/contratista/Inicio'), 'InicioContratista') },
+            { path: 'nuevo-parte', lazy: pagina(() => import('@/features/contratista/nuevo-parte/NuevoParte'), 'NuevoParteRuta') },
+            { path: 'trabajos', lazy: pagina(() => import('@/features/contratista/MisTrabajos'), 'MisTrabajos') },
+            { path: 'trabajos/:id', lazy: pagina(() => import('@/features/contratista/DetalleParte'), 'DetalleParte') },
+            { path: 'cobros', lazy: pagina(() => import('@/features/contratista/cobros/Cobros'), 'CobrosContratista') },
+            { path: 'cobros/nueva', lazy: pagina(() => import('@/features/contratista/cobros/ArmarLiquidacion'), 'ArmarLiquidacion') },
+            { path: 'cobros/:id', lazy: pagina(() => import('@/features/contratista/cobros/DetalleLiquidacion'), 'DetalleLiquidacion') },
+            { path: 'perfil', lazy: pagina(() => import('@/features/contratista/Perfil'), 'PerfilContratista') },
           ],
         },
         {
           path: 'productor',
           element: <ProductorLayout />,
           children: [
-            { index: true, handle: h('Panel'), element: <PanelProductor /> },
-            { path: 'partes', handle: h('Partes de labor'), element: <PartesProductor /> },
-            { path: 'partes/:id', handle: h('Partes de labor'), element: <PartesProductor /> },
-            { path: 'cuaderno', handle: h('Cuaderno'), element: <CuadernoProductor /> },
-            { path: 'contratistas', handle: h('Contratistas'), element: <DirectorioContratistas /> },
-            { path: 'contratistas/:id', handle: h('Contratistas'), element: <PerfilRed /> },
-            { path: 'pagos', handle: h('Pagos'), element: <PagosProductor /> },
-            { path: 'pagos/:id', handle: h('Pagos'), element: <PagosProductor /> },
-            { path: 'lotes', handle: h('Establecimientos y lotes'), element: <LotesProductor /> },
-            { path: 'informes', handle: h('Informes'), element: <InformesProductor /> },
-            { path: 'configuracion', handle: h('Configuración'), element: <ConfiguracionProductor /> },
+            { index: true, handle: h('Panel'), lazy: pagina(() => import('@/features/productor/Panel'), 'PanelProductor') },
+            { path: 'partes', handle: h('Partes de labor'), lazy: pagina(() => import('@/features/productor/Partes'), 'PartesProductor') },
+            { path: 'partes/:id', handle: h('Partes de labor'), lazy: pagina(() => import('@/features/productor/Partes'), 'PartesProductor') },
+            { path: 'cuaderno', handle: h('Cuaderno'), lazy: pagina(() => import('@/features/productor/Cuaderno'), 'CuadernoProductor') },
+            { path: 'contratistas', handle: h('Contratistas'), lazy: pagina(() => import('@/features/productor/contratistas/Directorio'), 'DirectorioContratistas') },
+            { path: 'contratistas/:id', handle: h('Contratistas'), lazy: pagina(() => import('@/features/productor/contratistas/PerfilRed'), 'PerfilRed') },
+            { path: 'pagos', handle: h('Pagos'), lazy: pagina(() => import('@/features/productor/Pagos'), 'PagosProductor') },
+            { path: 'pagos/:id', handle: h('Pagos'), lazy: pagina(() => import('@/features/productor/Pagos'), 'PagosProductor') },
+            { path: 'lotes', handle: h('Establecimientos y lotes'), lazy: pagina(() => import('@/features/productor/Lotes'), 'LotesProductor') },
+            { path: 'informes', handle: h('Informes'), lazy: pagina(() => import('@/features/productor/Informes'), 'InformesProductor') },
+            { path: 'configuracion', handle: h('Configuración'), lazy: pagina(() => import('@/features/productor/Configuracion'), 'ConfiguracionProductor') },
           ],
         },
         {
           path: 'ingeniero',
           element: <IngenieroLayout />,
           children: [
-            { index: true, handle: h('Mis clientes'), element: <ClientesIngeniero /> },
-            { path: 'aplicaciones', handle: h('Aplicaciones a validar'), element: <AplicacionesIngeniero /> },
-            { path: 'aplicaciones/:id', handle: h('Aplicaciones a validar'), element: <AplicacionesIngeniero /> },
-            { path: 'recetas', handle: h('Recetas'), element: <RecetasIngeniero /> },
-            { path: 'cuadernos', handle: h('Cuadernos con validación'), element: <CuadernosIngeniero /> },
+            { index: true, handle: h('Mis clientes'), lazy: pagina(() => import('@/features/ingeniero/Clientes'), 'ClientesIngeniero') },
+            { path: 'aplicaciones', handle: h('Aplicaciones a validar'), lazy: pagina(() => import('@/features/ingeniero/Aplicaciones'), 'AplicacionesIngeniero') },
+            { path: 'aplicaciones/:id', handle: h('Aplicaciones a validar'), lazy: pagina(() => import('@/features/ingeniero/Aplicaciones'), 'AplicacionesIngeniero') },
+            { path: 'recetas', handle: h('Recetas'), lazy: pagina(() => import('@/features/ingeniero/Recetas'), 'RecetasIngeniero') },
+            { path: 'cuadernos', handle: h('Cuadernos con validación'), lazy: pagina(() => import('@/features/ingeniero/Cuadernos'), 'CuadernosIngeniero') },
           ],
         },
         {
           path: 'admin',
           element: <AdminLayout />,
           children: [
-            { index: true, handle: h('Verificaciones'), element: <VerificacionesAdmin /> },
-            { path: 'contratistas', handle: h('Contratistas'), element: <ContratistasAdmin /> },
-            { path: 'disputas', handle: h('Disputas'), element: <DisputasAdmin /> },
-            { path: 'cobranza', handle: h('Cobranza'), element: <CobranzaAdmin /> },
-            { path: 'metricas', handle: h('Métricas'), element: <MetricasAdmin /> },
+            { index: true, handle: h('Verificaciones'), lazy: pagina(() => import('@/features/admin/Verificaciones'), 'VerificacionesAdmin') },
+            { path: 'contratistas', handle: h('Contratistas'), lazy: pagina(() => import('@/features/admin/ContratistasAdmin'), 'ContratistasAdmin') },
+            { path: 'disputas', handle: h('Disputas'), lazy: pagina(() => import('@/features/admin/Disputas'), 'DisputasAdmin') },
+            { path: 'cobranza', handle: h('Cobranza'), lazy: pagina(() => import('@/features/admin/CobranzaAdmin'), 'CobranzaAdmin') },
+            { path: 'metricas', handle: h('Métricas'), lazy: pagina(() => import('@/features/admin/Metricas'), 'MetricasAdmin') },
           ],
         },
-        { path: 'imprimir/cuaderno/:establecimiento/:campania', element: <CuadernoImprimible /> },
-        { path: 'imprimir/liquidacion/:id', element: <LiquidacionImprimible /> },
-        { path: 'planes', element: <main id="contenido" className="mx-auto max-w-4xl px-4 py-10"><EnConstruccion titulo="Planes" fase={6} icono="estrella" descripcion="Planes ilustrativos para productores y contratistas." items={['Productor Gratis y Pro', 'Contratista Básico, Verificado y Destacado', 'Precios a definir']} /></main> },
+        { path: 'imprimir/cuaderno/:establecimiento/:campania', lazy: pagina(() => import('@/print/CuadernoImprimible'), 'CuadernoImprimible') },
+        { path: 'imprimir/liquidacion/:id', lazy: pagina(() => import('@/print/LiquidacionImprimible'), 'LiquidacionImprimible') },
+        { path: 'planes', lazy: pagina(() => import('@/features/planes/Planes'), 'Planes') },
+        { path: 'onboarding', lazy: pagina(() => import('@/features/onboarding/Onboarding'), 'Onboarding') },
         { path: '*', element: <NoEncontrada /> },
       ],
     },
